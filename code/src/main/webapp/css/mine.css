@@ -1,0 +1,31 @@
+.my-label {
+    margin-left: 0.5rem;
+    position: relative;
+    vertical-align: top;
+    align-items: center;
+}
+/* 
+.my-label::before {
+    position: absolute;
+    top: .25rem;
+    left: -1.5rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    content: "";
+    background-color: #fff;
+    border: #b7b9cc solid 1px;
+    border-radius: 50%;
+}
+
+.my-label::after {
+    position: absolute;
+    top: .25rem;
+    left: -1.5rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    content: "";
+    background: no-repeat 50%/50% 50%;
+} */
