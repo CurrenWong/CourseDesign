@@ -4,16 +4,16 @@
     <display-name>Archetype Created Web Application</display-name>
 
 
-    <jsp-config>
+    <!-- <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
             <scripting-invalid>true</scripting-invalid>
         </jsp-property-group>
-    </jsp-config>
+    </jsp-config> -->
 
     <!-- <scripting-invalid>true</scripting-invalid> -->
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
 
