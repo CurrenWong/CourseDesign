@@ -6,7 +6,7 @@
     maxTotal = "4"
     maxIdle = "2"
     driverClassName = "com.mysql.jdbc.Driver"
-    url = "jdbc:mysql://39.106.116.63:3306/de v?useSSL=true"
+    url = "jdbc:mysql://39.106.116.63:3306/dev?useSSL=true"
     username = "coursedesign"
     password = "coursedesign"
     maxWaitMill = "5000"
