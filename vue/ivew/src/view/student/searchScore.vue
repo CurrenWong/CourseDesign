@@ -1,22 +1,19 @@
 <template>
   <div>
-   <div>
-     <header style="size: 1000px">2020普通高等学校招生全国统一考试成绩查询
-     </header>
+   <div class="head">
+    2020普通高等学校招生全国统一考试成绩查询
    </div>
-    <div style="margin-top: 15px;width: 50%;height: 100px">
-      <el-input placeholder="请输入准考证号" v-model="input1" class="input-with-select">
-        <el-button slot="append" icon="el-icon-search"></el-button>
+    <div class="searchbar">
+      <el-input placeholder="请输入准考证号" v-model="input1" class="input-with-select" style="line-height:50px;width:400px">
       </el-input>
-      <el-input placeholder="请输入姓名" v-model="input2" class="input-with-select">
+      <el-input placeholder="请输入姓名" v-model="input2" class="input-with-select" style="width:400px;">
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
     </div>
 
     <el-table
       :data="tableData"
-      style="width: 50%">
-
+      class="searchTable">
       <el-table-column
         prop="item"
          width="180">
@@ -55,3 +52,30 @@
    }
 </script>
 
+
+<style>
+.head{
+  width: 50%;
+  padding-left: 20px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  display: flex;
+  padding-right: 50px;
+  margin: auto;
+}
+  .searchbar{
+    margin: auto;
+    width: 50%;
+    height: 100px;
+  }
+  .searchTable{
+    width: 50%;
+    margin: auto;
+    padding-left: 100px;
+    line-height: 50px;
+    font-size: 20px;
+    color: #657180;
+    background-color: #DCDCDC;
+  }
+</style>

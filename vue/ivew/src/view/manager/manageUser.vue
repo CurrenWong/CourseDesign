@@ -40,9 +40,7 @@
                       vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex))
                     }
                   }
-                }, [
-                  h('Button', '自定义删除')
-                ])
+                })
               }
             ]
           }

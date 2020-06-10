@@ -130,7 +130,7 @@ export default [
     component: Main,
     children: [
       {
-        path: 'update_table_page',
+        path: 'manageUser',
         name: '账号管理',
         meta: {
           icon: 'ios-hammer',
@@ -141,7 +141,7 @@ export default [
     ]
   },
   {
-    path: '/update',
+    path: '/student',
     name: '学生',
     meta: {
       icon: 'md-cloud-upload',
@@ -150,7 +150,7 @@ export default [
     component: Main,
     children: [
       {
-        path: 'update_table_page',
+        path: 'searchScore',
         name: '成绩查询',
         meta: {
           icon: 'ios-document',
@@ -159,69 +159,96 @@ export default [
         component: () => import('@/view/student/searchScore.vue')
       },
       {
-        path: 'update_paste_page',
+        path: 'addVolunteer',
         name: '统招志愿填报',
         meta: {
           icon: 'md-clipboard',
-          title: '粘贴表格数据'
+          title: '统招志愿填报'
         },
-        component: () => import('@/view/update/update-paste.vue')
+        component: () => import('@/view/student/addVolunteer.vue')
       },
       {
-        path: 'update_paste_page',
+        path: 'addScdVol',
+        name: '第二批次志愿填报',
+        meta: {
+          hideInMenu: true,
+          title: '第二批次志愿填报'
+        },
+        component: () => import('@/view/student/addScdVol.vue')
+      },
+      {
+        path: 'additionalRcd',
         name: '补录志愿填报',
         meta: {
           icon: 'md-clipboard',
-          title: '粘贴表格数据'
+          title: '补录志愿填报'
         },
-        component: () => import('@/view/update/update-paste.vue')
+        component: () => import('@/view/student/additionalRcd.vue')
       },
       {
-        path: 'update_paste_page',
+        path: 'additionalScdRcd',
+        name: '第二批补录志愿填报',
+        meta: {
+          hideInMenu: true,
+          title: '第二批补录志愿填报'
+        },
+        component: () => import('@/view/student/additionalScdRcd.vue')
+      },
+      {
+        path: 'specialRcd',
         name: '特招志愿填表',
         meta: {
           icon: 'md-clipboard',
           title: '粘贴表格数据'
         },
-        component: () => import('@/view/update/update-paste.vue')
+        component: () => import('@/view/student/specialRcd.vue')
       },
       {
-        path: 'update_paste_page',
+        path: 'specialScdRcd',
+        name: '特招志愿填表',
+        meta: {
+          hideInMenu: true,
+          title: '补录志愿填报'
+        },
+        component: () => import('@/view/student/specialScdRcd.vue')
+      },
+      {
+        path: 'searchEnroll',
         name: '查询录取信息',
         meta: {
           icon: 'md-clipboard',
           title: '粘贴表格数据'
         },
-        component: () => import('@/view/update/update-paste.vue')
+        component: () => import('@/view/student/searchEnroll.vue')
       }
     ]
   },
   {
-    path: '/excel',
+    path: '/edudept',
     name: '教育部',
     meta: {
       icon: 'ios-stats',
-      title: 'EXCEL导入导出'
+      title: '教育部'
     },
     component: Main,
     children: [
       {
-        path: 'upload-excel',
+        path: 'approvePlan',
         name: '审批招生计划',
         meta: {
           icon: 'md-add',
-          title: '导入EXCEL'
+          title: '审批招生计划'
         },
-        component: () => import('@/view/excel/upload-excel.vue')
+        component: () => import('@/view/eduDept/approvePlan.vue')
       },
       {
-        path: 'export-excel',
+        path: 'planManage',
         name: '招生进度管理',
         meta: {
           icon: 'md-download',
-          title: '导出EXCEL'
+          title: '招生进度管理'
         },
-        component: () => import('@/view/excel/export-excel.vue')
+        component: () => import('@/view/eduDept/planManage.vue')
       }
     ]
   },
