@@ -1,8 +1,10 @@
 package com.courseDesign.servlet;
 
+import com.courseDesign.dao.CountrydepartDao;
 import com.courseDesign.dao.ManagerDao;
 import com.courseDesign.dao.StudentDao;
 import com.courseDesign.dao.UniversityDao;
+import com.courseDesign.object.countrydepart;
 import com.courseDesign.object.education_department;
 import com.courseDesign.object.manager;
 import com.courseDesign.object.student;
@@ -46,6 +48,16 @@ public class loginservlet  extends HttpServlet {
             ManagerDao dao=new ManagerDao();
             manager t=dao.login(musername,password);
             }
+        else if("country_depart".equals(type1)){//国家管理部门
+            String musername=request.getParameter("username");
+            String password=request.getParameter("password");
+            HttpSession session = request.getSession();
+            //把用户数据保存在session域对象中
+            session.setAttribute("tusername", musername);
+            session.setAttribute("password", password);
+            CountrydepartDao dao=new CountrydepartDao();
+            countrydepart t=dao.login(musername,password);
+        }
         else { //教育部
             String mname=request.getParameter("username");
             String password=request.getParameter("password");
