@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class CountrydepartDao extends BaseDao{
     public countrydepart login(String username, String password) {
-        String sql = "select * from countrydepart where username=  '" + username + "' and password='" + password + "' ";
+        String sql = "select * from education_department where username=  '" + username + "' and password='" + password + "' ";
         countrydepart st = null;
         try {
             Connection coon = DatabaseLink.getConnection();
