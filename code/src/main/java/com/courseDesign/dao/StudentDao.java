@@ -1,7 +1,9 @@
 package com.courseDesign.dao;
 
-import com.courseDesign.object.student;
+import com.courseDesign.javabean.student;
+import com.courseDesign.javabean.volunteer;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,6 +34,28 @@ public class StudentDao extends BaseDao {
             e.printStackTrace();
         }
         return st;
+    }
+    public student searchStudent(int i){
+        student student=new student();
+        String sql= "select * from student where id=?";
+        try {
+            Connection connection=DatabaseLink.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,i);
+            ResultSet rs=pstmt.executeQuery();
+            while (rs.next()){
+                student.setId(rs.getInt("id"));
+                student.setTestid((BigInteger) rs.getObject("testid"));
+                student.setName(rs.getString("name"));
+                student.setGender(rs.getString("gender"));
+                student.setRegionid(rs.getInt("regionid"));
+                student.setTotal_score(rs.getInt("total_score"));
+                student.setRank(rs.getInt("rank"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return student;
     }
 }
 
