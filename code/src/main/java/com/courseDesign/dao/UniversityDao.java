@@ -52,6 +52,7 @@ public class UniversityDao extends BaseDao {
                     volunteer.setStudentid(rs.getInt("studentid"));
                     volunteer.setUniversityid(rs.getInt("universityid"));
                     volunteer.setClassid(rs.getInt("classid"));
+                    volunteer.setType(rs.getNString("type"));
                     volunteers.add(volunteer);
                 }
             } catch (SQLException e) {
@@ -60,25 +61,5 @@ public class UniversityDao extends BaseDao {
             return volunteers;
         }
 
-    public major searchMajor(int i){
-        major major=new major();
-        String sql= "select * from major where classid=?";
-        try {
-            Connection connection=DatabaseLink.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setInt(1,i);
-            ResultSet rs=pstmt.executeQuery();
-            while (rs.next()){
-                major.setClassid(rs.getInt(1));
-                major.setRegioned(rs.getInt(2));
-                major.setNmajor(rs.getString(3));
-                major.setNclass(rs.getString(4));
-                major.setKind(rs.getInt(5));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return major;
-    }
 }
 

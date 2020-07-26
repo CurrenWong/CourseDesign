@@ -1,26 +1,26 @@
 package com.courseDesign.javabean;
 
 public class major {
-    public int classid;
-    public int regioned;
+    public int classId;
+    public int regionId;
     public String nmajor;
     public String nclass;
     public int kind;
 
-    public int getClassid() {
-        return classid;
+    public int getClassId() {
+        return classId;
     }
 
-    public void setClassid(int classid) {
-        this.classid = classid;
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
-    public int getRegioned() {
-        return regioned;
+    public int getRegionId() {
+        return regionId;
     }
 
-    public void setRegioned(int regioned) {
-        this.regioned = regioned;
+    public void setRegionId(int regionId) {
+        this.regionId = regionId;
     }
 
     public String getNmajor() {

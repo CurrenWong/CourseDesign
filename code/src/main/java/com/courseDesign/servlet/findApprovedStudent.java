@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.courseDesign.dao.MajorDao;
 import com.courseDesign.dao.StudentDao;
-import com.courseDesign.dao.UniversityDao;
 import com.courseDesign.javabean.major;
 import com.courseDesign.javabean.student;
+import com.courseDesign.javabean.university_enroll_student;
 import com.courseDesign.javabean.volunteer;
 
 import javax.servlet.ServletException;
@@ -21,9 +21,10 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@WebServlet(name = "findEnrolledStudent",urlPatterns = "/findEnrollStudent.do")
-public class findEnrolledStudent extends HttpServlet {
+@WebServlet(name = "findApprovedStudent",urlPatterns = "/findApprovedStudent.do")
+public class findApprovedStudent extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
@@ -41,18 +42,25 @@ public class findEnrolledStudent extends HttpServlet {
             sb.append(line);
         }
         HashMap map1 = JSONObject.parseObject(sb.toString(), HashMap.class);
-        int universityId= Integer.parseInt(map1.get("universityId").toString());
+        int studentId= Integer.parseInt(map1.get("studentId").toString());
 
-        UniversityDao universityDao=new UniversityDao();
+        StudentDao studentDao =new StudentDao();
         MajorDao majorDao=new MajorDao();
-        ArrayList<volunteer> volunteers=universityDao.searchVolunteer(universityId);
-        JSONArray jsonArray = new JSONArray();
+        student student=studentDao.searchStudent(studentId);
+        ArrayList<volunteer> volunteers=studentDao.searchVolunteer(studentId);
+        university_enroll_student universityEnrollStudent=studentDao.searchUES(studentId);
+
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("id",student.getId());
+        jsonObject.put("testId",student.getTestid());
+        jsonObject.put("name",student.getName());
+        jsonObject.put("gender",student.getGender());
+        jsonObject.put("regionId",student.getRegionid());
+        jsonObject.put("totalScore",student.getTotal_score());
+        jsonObject.put("rank",student.getRank());
+        JSONArray jsonArray1 = new JSONArray();
         for (int i = 0; i < volunteers.size(); i++) {
-            JSONObject jsonObject = new JSONObject();
-            JSONArray jsonArray1 = new JSONArray();
             ArrayList<major> majors=majorDao.searchMajor(volunteers.get(i).getClassid());
-            StudentDao studentDao=new StudentDao();
-            student student=studentDao.searchStudent(volunteers.get(i).getStudentid());
             for(int j=0;j<majors.size();j++){
                 JSONObject anotherjsonObject=new JSONObject();
                 anotherjsonObject.put("classId",volunteers.get(i).getClassid());
@@ -63,20 +71,13 @@ public class findEnrolledStudent extends HttpServlet {
                 anotherjsonObject.put("kind",majors.get(j).getKind());
                 jsonArray1.add(anotherjsonObject);
             }
-            jsonObject.put("majors",jsonArray1);
-            jsonObject.put("id",student.getId());
-            jsonObject.put("testId",student.getTestid());
-            jsonObject.put("name",student.getName());
-            jsonObject.put("gender",student.getGender());
-            jsonObject.put("regionId",student.getRegionid());
-            jsonObject.put("totalScore",student.getTotal_score());
-            jsonObject.put("rank",student.getRank());
-
-            jsonArray.add(jsonObject);
         }
+        jsonObject.put("majors",jsonArray1);
+        String s=majorDao.searchClassname(universityEnrollStudent.getClass_id());
+        jsonObject.put("approvedMajorName",s);
+        jsonObject.put("approvedType",universityEnrollStudent.getType());
 
-        out.print(jsonArray.toString());
-
+        out.print(jsonObject);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

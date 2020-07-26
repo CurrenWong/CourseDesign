@@ -1,6 +1,8 @@
 package com.courseDesign.dao;
 
+import com.courseDesign.javabean.major;
 import com.courseDesign.javabean.student;
+import com.courseDesign.javabean.university_enroll_student;
 import com.courseDesign.javabean.volunteer;
 
 import java.math.BigInteger;
@@ -57,6 +59,57 @@ public class StudentDao extends BaseDao {
         }
         return student;
     }
+
+    public ArrayList<volunteer> searchVolunteer(int i){
+        ArrayList<volunteer> volunteers=new ArrayList<volunteer>();
+
+        String sql= "select * from volunteer where studentid=?";
+        try {
+            Connection connection=DatabaseLink.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,i);
+            ResultSet rs=pstmt.executeQuery();
+            while (rs.next()){
+                volunteer volunteer=new volunteer();
+                volunteer.setVolunteerid(rs.getInt("volunteerid"));
+                volunteer.setVolunteerno(rs.getInt("volunteerno"));
+                volunteer.setBatch(rs.getInt("batch"));
+                volunteer.setIs_adjust(rs.getInt("is_adjust"));
+                volunteer.setStudentid(rs.getInt("studentid"));
+                volunteer.setUniversityid(rs.getInt("universityid"));
+                volunteer.setClassid(rs.getInt("classid"));
+                volunteer.setType(rs.getNString("type"));
+                volunteers.add(volunteer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return volunteers;
+    }
+
+    public university_enroll_student searchUES(int i){
+        university_enroll_student universityEnrollStudent=new university_enroll_student();
+        String sql= "select * from university_enroll_student where studentid=?";
+        try {
+            Connection connection=DatabaseLink.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,i);
+            ResultSet rs=pstmt.executeQuery();
+            while (rs.next()){
+                universityEnrollStudent.setId(rs.getInt(1));
+                universityEnrollStudent.setUniversityid(rs.getInt(2));
+                universityEnrollStudent.setStudentid(rs.getInt(3));
+                universityEnrollStudent.setYear(rs.getDate(4));
+                universityEnrollStudent.setType(rs.getString(5));
+                universityEnrollStudent.setClass_id(rs.getInt(6));
+                universityEnrollStudent.setIs_approved(rs.getInt(7));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  universityEnrollStudent;
+    }
+
 }
 
 

@@ -48,7 +48,7 @@ public class approveEnrolledStudent extends HttpServlet {
         HashMap map1 = JSONObject.parseObject(sb.toString(), HashMap.class);
         int id= Integer.parseInt(map1.get("id").toString());
         int is_approved=0;
-        String isapproved=(map1.get("is_approved").toString();
+        String isapproved=(map1.get("is_approved").toString());
         if(isapproved.equals("录取"))
             is_approved=1;
         else if(isapproved.equals("退档"))
