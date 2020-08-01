@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 public class student {
     public int id;
-    public BigInteger testid;
+    public long testid;
     public String password;
     public String name;
     public String gender;
@@ -25,11 +25,11 @@ public class student {
         this.id = id;
     }
 
-    public BigInteger getTestid() {
+    public long getTestid() {
         return testid;
     }
 
-    public void setTestid(BigInteger testid) {
+    public void setTestid(long testid) {
         this.testid = testid;
     }
 

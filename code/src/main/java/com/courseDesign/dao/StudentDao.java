@@ -47,7 +47,30 @@ public class StudentDao extends BaseDao {
             ResultSet rs=pstmt.executeQuery();
             while (rs.next()){
                 student.setId(rs.getInt("id"));
-                student.setTestid((BigInteger) rs.getObject("testid"));
+                student.setTestid(rs.getLong("testid"));
+                student.setName(rs.getString("name"));
+                student.setGender(rs.getString("gender"));
+                student.setRegionid(rs.getInt("regionid"));
+                student.setTotal_score(rs.getInt("total_score"));
+                student.setRank(rs.getInt("rank"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return student;
+    }
+
+    public student searchStudentbytestid(int i){
+        student student=new student();
+        String sql= "select * from student where testid=?";
+        try {
+            Connection connection=DatabaseLink.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,i);
+            ResultSet rs=pstmt.executeQuery();
+            while (rs.next()){
+                student.setId(rs.getInt("id"));
+                student.setTestid(rs.getLong("testid"));
                 student.setName(rs.getString("name"));
                 student.setGender(rs.getString("gender"));
                 student.setRegionid(rs.getInt("regionid"));

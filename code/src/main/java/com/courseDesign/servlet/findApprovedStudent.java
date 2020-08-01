@@ -34,15 +34,8 @@ public class findApprovedStudent extends HttpServlet {
         /* 星号表示所有的异域请求都可以接受， */
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
         PrintWriter out=response.getWriter();
-        // 读取请求内容
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
-        String line = null;
-        StringBuilder sb = new StringBuilder();
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-        }
-        HashMap map1 = JSONObject.parseObject(sb.toString(), HashMap.class);
-        int studentId= Integer.parseInt(map1.get("studentId").toString());
+
+        int studentId= Integer.parseInt(request.getParameter("studentId").toString());
 
         StudentDao studentDao =new StudentDao();
         MajorDao majorDao=new MajorDao();
