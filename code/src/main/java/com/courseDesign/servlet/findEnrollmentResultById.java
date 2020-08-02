@@ -60,7 +60,7 @@ public class findEnrollmentResultById extends HttpServlet {
         ues.setType((String) map.get("type"));
         ues.setClass_id((Integer) map.get("class_id"));
         ues.setIs_approved((Integer) map.get("is_approved"));
-        String isapproved=new String();
+        int isapproved =0;
         if(ues.getIs_approved()==1)
             isapproved=1;
         if(ues.getIs_approved()==-1)
