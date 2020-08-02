@@ -38,20 +38,14 @@ public class approveEnrolledStudent extends HttpServlet {
 
 
         // 读取请求内容
-  
-        int id= Integer.parseInt(request.getParameter("id").toString());
-        int is_approved=0;
-        String isapproved=(map1.get("is_approved").toString());
-        if(isapproved == 1)
-            is_approved=1;
-        else if(isapproved == -1)
-            is_approved=-1;
+
+        int id= Integer.parseInt(request.getParameter("studentid"));
 
         university_enroll_student universityenrollstudent=new university_enroll_student();
         BaseDao baseDao=new BaseDao();
 
-        String sql="update university_enroll_student set is_approved=? where id=?";
-        baseDao.executeUpdate(sql,is_approved,id);
+        String sql="update university_enroll_student set is_approved=1 where id=?";
+        baseDao.executeUpdate(sql,id);
 
     }
 
