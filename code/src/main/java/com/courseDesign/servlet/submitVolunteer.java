@@ -39,23 +39,14 @@ public class submitVolunteer extends HttpServlet {
 
 
         // 读取请求内容
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
-        String line = null;
-        StringBuilder sb = new StringBuilder();
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-        }
-
-
-        HashMap map1 = JSONObject.parseObject(sb.toString(), HashMap.class);
-        int volunteerid= Integer.parseInt(map1.get("volunteerid").toString());
-        int volunteerno=Integer.parseInt(map1.get("volunteerno").toString());
-        int batch=Integer.parseInt(map1.get("batch").toString());
-        int is_adjust=Integer.parseInt(map1.get("is_adjust").toString());
-        int studentid=Integer.parseInt(map1.get("studentid").toString());
-        int universityid=Integer.parseInt(map1.get("universityid").toString());
-        int classid=Integer.parseInt(map1.get("classid").toString());
-        String type=map1.get("type").toString();
+        int volunteerid= Integer.parseInt(request.getParameter("volunteerid").toString());
+        int volunteerno=Integer.parseInt(request.getParameter("volunteerno").toString());
+        int batch=Integer.parseInt(request.getParameter("batch").toString());
+        int is_adjust=Integer.parseInt(request.getParameter("is_adjust").toString());
+        int studentid=Integer.parseInt(request.getParameter("studentid").toString());
+        int universityid=Integer.parseInt(request.getParameter("universityid").toString());
+        int classid=Integer.parseInt(request.getParameter("classid").toString());
+        String type=request.getParameter("type").toString();
 
         BaseDao baseDao=new BaseDao();
 
