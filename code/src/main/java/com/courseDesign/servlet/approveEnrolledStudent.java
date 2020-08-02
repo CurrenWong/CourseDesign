@@ -38,20 +38,13 @@ public class approveEnrolledStudent extends HttpServlet {
 
 
         // 读取请求内容
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
-        String line = null;
-        StringBuilder sb = new StringBuilder();
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-        }
-
-        HashMap map1 = JSONObject.parseObject(sb.toString(), HashMap.class);
-        int id= Integer.parseInt(map1.get("id").toString());
+  
+        int id= Integer.parseInt(request.getParameter("id").toString());
         int is_approved=0;
         String isapproved=(map1.get("is_approved").toString());
-        if(isapproved.equals("录取"))
+        if(isapproved == 1)
             is_approved=1;
-        else if(isapproved.equals("退档"))
+        else if(isapproved == -1)
             is_approved=-1;
 
         university_enroll_student universityenrollstudent=new university_enroll_student();
