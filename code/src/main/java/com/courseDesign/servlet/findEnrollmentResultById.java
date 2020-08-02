@@ -44,16 +44,7 @@ public class findEnrollmentResultById extends HttpServlet {
 
         PrintWriter out=response.getWriter();
         // 读取请求内容
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
-        String line = null;
-        StringBuilder sb = new StringBuilder();
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-        }
-
-
-        HashMap map1 = JSONObject.parseObject(sb.toString(), HashMap.class);
-        int studentid= Integer.parseInt(map1.get("studentid").toString());
+        int studentid= Integer.parseInt(request.getParameter("studentid").toString());
 
         university_enroll_student ues=new university_enroll_student(); //录取信息
         BaseDao baseDao=new BaseDao();
@@ -71,11 +62,11 @@ public class findEnrollmentResultById extends HttpServlet {
         ues.setIs_approved((Integer) map.get("is_approved"));
         String isapproved=new String();
         if(ues.getIs_approved()==1)
-            isapproved="录取";
+            isapproved=1;
         if(ues.getIs_approved()==-1)
-            isapproved="退档";
+            isapproved=-1;
         if(ues.getIs_approved()==0)
-            isapproved="未录取";
+            isapproved=0;
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id",ues.getId());
