@@ -1,7 +1,6 @@
 package com.courseDesign.dao;
 
-import com.courseDesign.object.education_department;
-import com.courseDesign.object.manager;
+import com.courseDesign.javabean.manager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
