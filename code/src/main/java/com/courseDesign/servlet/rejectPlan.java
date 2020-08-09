@@ -26,15 +26,8 @@ public class rejectPlan  extends HttpServlet {
         /* 星号表示所有的异域请求都可以接受， */
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
         PrintWriter out=response.getWriter();
-        // 读取请求内容
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
-        String line = null;
-        StringBuilder sb = new StringBuilder();
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-        }
-        HashMap map1 = JSONObject.parseObject(sb.toString(), HashMap.class);
-        int is_approved=Integer.parseInt(map1.get("is_approved").toString());
+    
+        int is_approved=Integer.parseInt(request.getParameter("is_approved").toString());
         BaseDao baseDao=new BaseDao();
         String sql="update plan set is_approve=0";
         baseDao.executeUpdate(sql,is_approved);
