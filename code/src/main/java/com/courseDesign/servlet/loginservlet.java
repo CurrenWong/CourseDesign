@@ -1,72 +1,94 @@
 package com.courseDesign.servlet;
 
+import com.alibaba.fastjson.JSONObject;
 import com.courseDesign.dao.CountrydepartDao;
 import com.courseDesign.dao.ManagerDao;
 import com.courseDesign.dao.StudentDao;
 import com.courseDesign.dao.UniversityDao;
-import com.courseDesign.object.countrydepart;
-import com.courseDesign.object.education_department;
-import com.courseDesign.object.manager;
-import com.courseDesign.object.student;
+import com.courseDesign.javabean.education_department;
+import com.courseDesign.javabean.manager;
+import com.courseDesign.javabean.student;
+import com.courseDesign.javabean.university;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.HashMap;
 
 @WebServlet(name = "loginservlet",urlPatterns = "/loginservlet.do")
 public class loginservlet  extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-}
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String type1 = request.getParameter("identity");
-        if ("student".equals(type1)) {//学生
-            student st=new student();
-            String username=request.getParameter("username");
-            String password=request.getParameter("password");
-            StudentDao dao=new StudentDao();
-            student st1 = dao.login(username,password);
-            HttpSession session = request.getSession();
-            session.setAttribute("username", username);
-            if(st1!=null){
-                System.out.println("学生成功登录！");
-            }else{
-                System.out.println("您还未注册注册，请您先去注册！");
-            }
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
-        } else if ("manager".equals(type1)) {//管理员
-            String musername=request.getParameter("username");
-            String password=request.getParameter("password");
-            HttpSession session = request.getSession();
-            //把用户数据保存在session域对象中
-            session.setAttribute("tusername", musername);
-            session.setAttribute("password", password);
-            ManagerDao dao=new ManagerDao();
-            manager t=dao.login(musername,password);
+        response.setHeader("content-type","text/html;charset=UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        /* 星号表示所有的异域请求都可以接受， */
+        response.setHeader("Access-Control-Allow-Methods", "GET,POST");
+        PrintWriter out=response.getWriter();
+        // 读取请求内容0
+        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
+        String line = null;
+        StringBuilder sb = new StringBuilder();
+        while ((line = br.readLine()) != null) {
+            sb.append(line);
+        }
+        HashMap map1 = JSONObject.parseObject(sb.toString(), HashMap.class);
+        String identity=map1.get("identity").toString();
+        String username=map1.get("username").toString();
+        String password=map1.get("password").toString();
+        if(identity.equals("student")){
+            StudentDao studentDao=new StudentDao();
+            student students=studentDao.login(username,password);
+            if(students!=null){
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",students.getId());
+                jsonObject.put("identity","student");
+            }else{
+                response.sendError(402, "用户名或密码错误!!!" );
             }
-        else if("country_depart".equals(type1)){//国家管理部门
-            String musername=request.getParameter("username");
-            String password=request.getParameter("password");
-            HttpSession session = request.getSession();
-            //把用户数据保存在session域对象中
-            session.setAttribute("tusername", musername);
-            session.setAttribute("password", password);
-            CountrydepartDao dao=new CountrydepartDao();
-            countrydepart t=dao.login(musername,password);
         }
-        else { //教育部
-            String mname=request.getParameter("username");
-            String password=request.getParameter("password");
-            HttpSession session = request.getSession();
-            //把用户数据保存在session域对象中
-            session.setAttribute("mname", mname);
-            session.setAttribute("password", password);
-            UniversityDao dao=new UniversityDao();
-            education_department t=dao.login(mname,password);
+        else if(identity.equals("university")){
+            UniversityDao universityDao=new UniversityDao();
+            university university=universityDao.login(username,password);
+            if(university!=null){
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",university.getUniversityid());
+                jsonObject.put("identity","university");
+            }else{
+                response.sendError(402, "用户名或密码错误!!!" );
+            }
+        }else if(identity.equals("manager")){
+            ManagerDao managerDao=new ManagerDao();
+            manager ma=managerDao.login(username,password);
+            if(ma!=null){
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",ma.getId());
+                jsonObject.put("identity","manager");
+            }else{
+                response.sendError(402, "用户名或密码错误!!!" );
+            }
+        }else {
+            CountrydepartDao countrydepartDao=new CountrydepartDao();
+            education_department edu=countrydepartDao.login(username,password);
+            if(edu!=null){
+                JSONObject jsonObject=new JSONObject();
+                jsonObject.put("id",edu.getId());
+                jsonObject.put("identity","education_department");
+            }else{
+                response.sendError(402, "用户名或密码错误!!!" );
+            }
         }
+
+    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request,response);
     }
 }
