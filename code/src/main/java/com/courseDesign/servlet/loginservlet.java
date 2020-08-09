@@ -55,14 +55,17 @@ public class loginservlet  extends HttpServlet {
                 response.sendError(402, "用户名或密码错误!!!" );
             }
         }
-        else if(identity.equals("university")){
+   
+             else if(identity.equals("university")){
             UniversityDao universityDao=new UniversityDao();
-            university university=universityDao.login(username,password);
-            if(university!=null){
+            education_department education_department=universityDao.login(username,password);
+
+            if(education_department!=null){
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id",university.getUniversityid());
+                jsonObject.put("id",education_department.getId());
                 jsonObject.put("identity","university");
-            }else{
+            }    
+             else{
                 response.sendError(402, "用户名或密码错误!!!" );
             }
         }else if(identity.equals("manager")){
