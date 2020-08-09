@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
+public class UniversityDao extends BaseDao {
  public university login(String username, String password) {
             String sql = "select * from university where username=  '" + username + "' and password='" + password + "' ";
             university st = null;
