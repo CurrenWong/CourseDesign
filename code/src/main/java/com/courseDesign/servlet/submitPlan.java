@@ -26,21 +26,15 @@ public class submitPlan extends HttpServlet {
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
         PrintWriter out=response.getWriter();
         // 读取请求内容
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
-        String line = null;
-        StringBuilder sb = new StringBuilder();
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-        }
-        HashMap map1 = JSONObject.parseObject(sb.toString(), HashMap.class);
-        int planid= Integer.parseInt(map1.get("planid").toString());
-        String year =map1.get("year").toString();
-        int regionid=Integer.parseInt(map1.get("regionid").toString());
-        int classid=Integer.parseInt(map1.get("classid").toString());
-        int universotyid=Integer.parseInt(map1.get("universotyid").toString());
-        int number=Integer.parseInt(map1.get("number").toString());
-        int is_approved=Integer.parseInt(map1.get("is_approved").toString());
-        String approved_by=map1.get("approved_by").toString();
+  
+        int planid= Integer.parseInt(request.getParameter("planid").toString());
+        String year =request.getParameter("year").toString();
+        int regionid=Integer.parseInt(request.getParameter("regionid").toString());
+        int classid=Integer.parseInt(request.getParameter("classid").toString());
+        int universotyid=Integer.parseInt(request.getParameter("universotyid").toString());
+        int number=Integer.parseInt(request.getParameter("number").toString());
+        int is_approved=Integer.parseInt(request.getParameter("is_approved").toString());
+        String approved_by=request.getParameter("approved_by").toString();
         BaseDao baseDao=new BaseDao();
         String sql="insert into plan（planid,year,regionid,classid,universotyid,number,is_approved,approved_by） values(?,?,?,?,?,?,?,?)";
         baseDao.executeUpdate(sql,planid,year,regionid,classid,universotyid,number,is_approved,approved_by);
