@@ -56,19 +56,20 @@ public class loginservlet  extends HttpServlet {
             }
         }
    
-             else if(identity.equals("university")){
+          else if(identity.equals("university")){
             UniversityDao universityDao=new UniversityDao();
-            education_department education_department=universityDao.login(username,password);
-
-            if(education_department!=null){
+            university university=universityDao.login(username,password);
+            if(university!=null){
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id",education_department.getId());
+                jsonObject.put("id",university.getUniversityid());
                 jsonObject.put("identity","university");
-            }    
-             else{
+            }
+            else{
                 response.sendError(402, "用户名或密码错误!!!" );
             }
-        }else if(identity.equals("manager")){
+        }
+                
+                else if(identity.equals("manager")){
             ManagerDao managerDao=new ManagerDao();
             manager ma=managerDao.login(username,password);
             if(ma!=null){
