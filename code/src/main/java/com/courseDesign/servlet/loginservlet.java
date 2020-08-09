@@ -40,10 +40,10 @@ public class loginservlet  extends HttpServlet {
         while ((line = br.readLine()) != null) {
             sb.append(line);
         }
-        HashMap map1 = JSONObject.parseObject(sb.toString(), HashMap.class);
-        String identity=map1.get("identity").toString();
-        String username=map1.get("username").toString();
-        String password=map1.get("password").toString();
+         String identity = request.getParameter("identity");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+       
         if(identity.equals("student")){
             StudentDao studentDao=new StudentDao();
             student students=studentDao.login(username,password);
