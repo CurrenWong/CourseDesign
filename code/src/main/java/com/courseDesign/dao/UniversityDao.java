@@ -2,6 +2,7 @@ package com.courseDesign.dao;
 
 import com.courseDesign.javabean.education_department;
 import com.courseDesign.javabean.major;
+import com.courseDesign.javabean.university;
 import com.courseDesign.javabean.volunteer;
 
 import java.sql.Connection;
@@ -11,16 +12,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class UniversityDao extends BaseDao {
-        public education_department login(String username, String password) {
+ public university login(String username, String password) {
             String sql = "select * from university where username=  '" + username + "' and password='" + password + "' ";
-            education_department st = null;
+            university st = null;
             try {
                 Connection coon = DatabaseLink.getConnection();
                 PreparedStatement pstmt = coon.prepareStatement(sql);
                 ResultSet rs = pstmt.executeQuery();
                 while (rs.next()) {
-                    st = new education_department();
+                    st = new university();
                     st.setUsername(rs.getString("username"));
                     st.setPassword(rs.getString("password"));
                 }
