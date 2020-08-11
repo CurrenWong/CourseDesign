@@ -34,7 +34,7 @@ public class findStudentByTestid extends HttpServlet {
         PrintWriter out=response.getWriter();
 
         int testid= Integer.parseInt(request.getParameter("testId").toString());
-        String name=request.getParameter("name").toString();
+        String name=request.getParameter("name");
 
         StudentDao studentDao=new StudentDao();
         student student=studentDao.searchStudentbytestid(testid);
