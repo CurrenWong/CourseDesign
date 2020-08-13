@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable = "true">
+<Resource
+    name = "jdbc/CourseDesign"
+    type = "javax.sql.DataSource"
+    maxTotal = "4"
+    maxIdle = "2"
+    driverClassName = "com.mysql.jdbc.Driver"
+    url = "jdbc:mysql://39.106.116.63:3306/dev?useSSL=true"
+    username = "coursedesign"
+    password = "coursedesign"
+    maxWaitMill = "5000"
+/>
+</Context>
+
