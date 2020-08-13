@@ -10,5 +10,6 @@
 ├── javabean  // 存放JavaBean
 ├── listener  // 存放监听器
 ├── object  // 存放自定义对象
-└── servlet  // 存放Servlet
+├── servlet  // 存放Servlet
+└── test  // 存放JUnit测试脚本
 ```

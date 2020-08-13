@@ -23,11 +23,11 @@ import java.util.Map;
 
 @WebServlet(name = "findEnrollmentResultById")
 public class findEnrollmentResultById extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
         //设置缓冲区编码
@@ -41,17 +41,16 @@ public class findEnrollmentResultById extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
 
-
-        PrintWriter out=response.getWriter();
         // 读取请求内容
-        int studentid= Integer.parseInt(request.getParameter("studentid").toString());
-
+        int studentid = Integer.parseInt(request.getParameter("studentid").toString());
+        
+        PrintWriter out=response.getWriter();
         university_enroll_student ues=new university_enroll_student(); //录取信息
         BaseDao baseDao=new BaseDao();
         List<Map<String,Object>> maps=new ArrayList<>();
         String sql="select * from university_enroll_student where studentid=?";
         maps=baseDao.executeQuery(sql,studentid);
-
+        
         Map<String, Object> map=maps.get(0);//整个maps只有一条map
         ues.setId((Integer) map.get("id"));
         ues.setStudentid((Integer) map.get("studentid"));

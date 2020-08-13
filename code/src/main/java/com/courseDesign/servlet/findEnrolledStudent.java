@@ -21,49 +21,49 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@WebServlet(name = "findEnrolledStudent",urlPatterns = "/findEnrollStudent.do")
+@WebServlet(name = "findEnrolledStudent", urlPatterns = "/findEnrollStudent.do")
 public class findEnrolledStudent extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
 
-        response.setHeader("content-type","text/html;charset=UTF-8");
+        response.setHeader("content-type", "text/html;charset=UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
         /* 星号表示所有的异域请求都可以接受， */
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
-        PrintWriter out=response.getWriter();
 
-        int universityId= Integer.parseInt(request.getParameter("universityId").toString());
+        int universityId = Integer.parseInt(request.getParameter("universityId").toString());
+        PrintWriter out = response.getWriter();
 
-        UniversityDao universityDao=new UniversityDao();
-        MajorDao majorDao=new MajorDao();
-        ArrayList<volunteer> volunteers=universityDao.searchVolunteer(universityId);
+        UniversityDao universityDao = new UniversityDao();
+        MajorDao majorDao = new MajorDao();
+        ArrayList<volunteer> volunteers = universityDao.searchVolunteer(universityId);
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < volunteers.size(); i++) {
             JSONObject jsonObject = new JSONObject();
             JSONArray jsonArray1 = new JSONArray();
-            ArrayList<major> majors=majorDao.searchMajor(volunteers.get(i).getClassid());
-            StudentDao studentDao=new StudentDao();
-            student student=studentDao.searchStudent(volunteers.get(i).getStudentid());
-            for(int j=0;j<majors.size();j++){
-                JSONObject anotherjsonObject=new JSONObject();
-                anotherjsonObject.put("classId",volunteers.get(i).getClassid());
-                anotherjsonObject.put("regionId",student.getRegionid());
-                anotherjsonObject.put("nmajor",majors.get(j).getNmajor());
-                anotherjsonObject.put("nclass",majors.get(j).getNclass());
-                anotherjsonObject.put("batch",volunteers.get(i).getBatch());
-                anotherjsonObject.put("kind",majors.get(j).getKind());
+            ArrayList<major> majors = majorDao.searchMajor(volunteers.get(i).getClassid());
+            StudentDao studentDao = new StudentDao();
+            student student = studentDao.searchStudent(volunteers.get(i).getStudentid());
+            for (int j = 0; j < majors.size(); j++) {
+                JSONObject anotherjsonObject = new JSONObject();
+                anotherjsonObject.put("classId", volunteers.get(i).getClassid());
+                anotherjsonObject.put("regionId", student.getRegionid());
+                anotherjsonObject.put("nmajor", majors.get(j).getNmajor());
+                anotherjsonObject.put("nclass", majors.get(j).getNclass());
+                anotherjsonObject.put("batch", volunteers.get(i).getBatch());
+                anotherjsonObject.put("kind", majors.get(j).getKind());
                 jsonArray1.add(anotherjsonObject);
             }
-            jsonObject.put("majors",jsonArray1);
-            jsonObject.put("id",student.getId());
-            jsonObject.put("testId",student.getTestid());
-            jsonObject.put("name",student.getName());
-            jsonObject.put("gender",student.getGender());
-            jsonObject.put("regionId",student.getRegionid());
-            jsonObject.put("totalScore",student.getTotal_score());
-            jsonObject.put("rank",student.getRank());
+            jsonObject.put("majors", jsonArray1);
+            jsonObject.put("id", student.getId());
+            jsonObject.put("testId", student.getTestid());
+            jsonObject.put("name", student.getName());
+            jsonObject.put("gender", student.getGender());
+            jsonObject.put("regionId", student.getRegionid());
+            jsonObject.put("totalScore", student.getTotal_score());
+            jsonObject.put("rank", student.getRank());
 
             jsonArray.add(jsonObject);
         }
@@ -72,7 +72,7 @@ public class findEnrolledStudent extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
     }
 }
