@@ -99,7 +99,7 @@ public class TestFindEnrollmentResultById extends EasyMockSupport {
         assertEquals("2020", js.get("year"));
         assertEquals("统招", js.get("type"));
         assertEquals(5, js.get("classId"));
-        assertEquals("国际经济与贸易、金融学、税收学、管理科学", js.get("className"));
+        assertEquals("经济与贸易类", js.get("className"));
         assertEquals(0, js.get("isApproved"));
         
     }

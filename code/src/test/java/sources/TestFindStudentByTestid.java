@@ -69,7 +69,7 @@ public class TestFindStudentByTestid extends EasyMockSupport {
 
         // 设置参数
         expect(request.getParameter("name")).andReturn("王一");
-        expect(request.getParameter("testId")).andReturn("19875426874625");
+        expect(request.getParameter("testId")).andReturn(String.valueOf(19875426874625L));
         // 设置返回参数
         try {
             expect(response.getWriter()).andReturn(writer);
