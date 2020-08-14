@@ -31,30 +31,33 @@ public class findStudentByTestid extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         /* 星号表示所有的异域请求都可以接受， */
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
-        PrintWriter out=response.getWriter();
 
-        int testid= Integer.parseInt(request.getParameter("testId").toString());
+
+        long testid= Long.parseLong(request.getParameter("testId").toString());
         String name=request.getParameter("name");
 
         StudentDao studentDao=new StudentDao();
-        student student=studentDao.searchStudentbytestid(testid);
+        student student=studentDao.searchStudentbytestid(testid,name);
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id",student.getId());
-        jsonObject.put("testId",student.getTestid());
-        jsonObject.put("name",student.getName());
-        jsonObject.put("gender",student.getGender());
-        jsonObject.put("regionId",student.getRegionid());
-        jsonObject.put("totalScore",student.getTotal_score());
-        jsonObject.put("rank",student.getRank());
-        jsonObject.put("chinesrScore",student.getChinese_score());
-        jsonObject.put("mathScore",student.getMath_score());
-        jsonObject.put("englishScore",student.getEnglish_score());
-        jsonObject.put("compScore",student.getComp_score());
-        jsonObject.put("kind",student.getKind());
-
-        out.print(jsonObject.toString());
-
+        if (!"null".equals(String.valueOf(student.getId())) && !"0".equals(String.valueOf(student.getId()))&&!"null".equals(student.getName())) {
+            PrintWriter out=response.getWriter();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id",student.getId());
+            jsonObject.put("testId",student.getTestid());
+            jsonObject.put("name",student.getName());
+            jsonObject.put("gender",student.getGender());
+            jsonObject.put("regionId",student.getRegionid());
+            jsonObject.put("totalScore",student.getTotal_score());
+            jsonObject.put("rank",student.getRank());
+            jsonObject.put("chinesrScore",student.getChinese_score());
+            jsonObject.put("mathScore",student.getMath_score());
+            jsonObject.put("englishScore",student.getEnglish_score());
+            jsonObject.put("compScore",student.getComp_score());
+            jsonObject.put("kind",student.getKind());
+            out.print(jsonObject.toString());
+        }else{
+            response.sendError(402, "姓名或准考证号输入错误");
+        }
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

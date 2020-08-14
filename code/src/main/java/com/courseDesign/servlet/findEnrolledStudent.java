@@ -34,41 +34,44 @@ public class findEnrolledStudent extends HttpServlet {
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
 
         int universityId = Integer.parseInt(request.getParameter("universityId").toString());
-        PrintWriter out = response.getWriter();
 
         UniversityDao universityDao = new UniversityDao();
         MajorDao majorDao = new MajorDao();
         ArrayList<volunteer> volunteers = universityDao.searchVolunteer(universityId);
-        JSONArray jsonArray = new JSONArray();
-        for (int i = 0; i < volunteers.size(); i++) {
-            JSONObject jsonObject = new JSONObject();
-            JSONArray jsonArray1 = new JSONArray();
-            ArrayList<major> majors = majorDao.searchMajor(volunteers.get(i).getClassid());
-            StudentDao studentDao = new StudentDao();
-            student student = studentDao.searchStudent(volunteers.get(i).getStudentid());
-            for (int j = 0; j < majors.size(); j++) {
-                JSONObject anotherjsonObject = new JSONObject();
-                anotherjsonObject.put("classId", volunteers.get(i).getClassid());
-                anotherjsonObject.put("regionId", student.getRegionid());
-                anotherjsonObject.put("nmajor", majors.get(j).getNmajor());
-                anotherjsonObject.put("nclass", majors.get(j).getNclass());
-                anotherjsonObject.put("batch", volunteers.get(i).getBatch());
-                anotherjsonObject.put("kind", majors.get(j).getKind());
-                jsonArray1.add(anotherjsonObject);
+        if(!(volunteers.size() ==0)){
+            PrintWriter out = response.getWriter();
+            JSONArray jsonArray = new JSONArray();
+            for (int i = 0; i < volunteers.size(); i++) {
+                JSONObject jsonObject = new JSONObject();
+                JSONArray jsonArray1 = new JSONArray();
+                ArrayList<major> majors = majorDao.searchMajor(volunteers.get(i).getClassid());
+                StudentDao studentDao = new StudentDao();
+                student student = studentDao.searchStudent(volunteers.get(i).getStudentid());
+                for (int j = 0; j < majors.size(); j++) {
+                    JSONObject anotherjsonObject = new JSONObject();
+                    anotherjsonObject.put("classId", volunteers.get(i).getClassid());
+                    anotherjsonObject.put("regionId", student.getRegionid());
+                    anotherjsonObject.put("nmajor", majors.get(j).getNmajor());
+                    anotherjsonObject.put("nclass", majors.get(j).getNclass());
+                    anotherjsonObject.put("batch", volunteers.get(i).getBatch());
+                    anotherjsonObject.put("kind", majors.get(j).getKind());
+                    jsonArray1.add(anotherjsonObject);
+                }
+                jsonObject.put("majors", jsonArray1);
+                jsonObject.put("id", student.getId());
+                jsonObject.put("testId", student.getTestid());
+                jsonObject.put("name", student.getName());
+                jsonObject.put("gender", student.getGender());
+                jsonObject.put("regionId", student.getRegionid());
+                jsonObject.put("totalScore", student.getTotal_score());
+                jsonObject.put("rank", student.getRank());
+
+                jsonArray.add(jsonObject);
             }
-            jsonObject.put("majors", jsonArray1);
-            jsonObject.put("id", student.getId());
-            jsonObject.put("testId", student.getTestid());
-            jsonObject.put("name", student.getName());
-            jsonObject.put("gender", student.getGender());
-            jsonObject.put("regionId", student.getRegionid());
-            jsonObject.put("totalScore", student.getTotal_score());
-            jsonObject.put("rank", student.getRank());
-
-            jsonArray.add(jsonObject);
+            out.print(jsonArray.toString());
+        }else{
+            response.sendError(403, "访问错误，请刷新后重试");
         }
-
-        out.print(jsonArray.toString());
 
     }
 

@@ -33,7 +33,7 @@ public class findApprovedStudent extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         /* 星号表示所有的异域请求都可以接受， */
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
-        PrintWriter out=response.getWriter();
+
 
         int studentId= Integer.parseInt(request.getParameter("studentId").toString());
 
@@ -43,34 +43,41 @@ public class findApprovedStudent extends HttpServlet {
         ArrayList<volunteer> volunteers=studentDao.searchVolunteer(studentId);
         university_enroll_student universityEnrollStudent=studentDao.searchUES(studentId);
 
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.put("id",student.getId());
-        jsonObject.put("testId",student.getTestid());
-        jsonObject.put("name",student.getName());
-        jsonObject.put("gender",student.getGender());
-        jsonObject.put("regionId",student.getRegionid());
-        jsonObject.put("totalScore",student.getTotal_score());
-        jsonObject.put("rank",student.getRank());
-        JSONArray jsonArray1 = new JSONArray();
-        for (int i = 0; i < volunteers.size(); i++) {
-            ArrayList<major> majors=majorDao.searchMajor(volunteers.get(i).getClassid());
-            for(int j=0;j<majors.size();j++){
-                JSONObject anotherjsonObject=new JSONObject();
-                anotherjsonObject.put("classId",volunteers.get(i).getClassid());
-                anotherjsonObject.put("regionId",student.getRegionid());
-                anotherjsonObject.put("nmajor",majors.get(j).getNmajor());
-                anotherjsonObject.put("nclass",majors.get(j).getNclass());
-                anotherjsonObject.put("batch",volunteers.get(i).getBatch());
-                anotherjsonObject.put("kind",majors.get(j).getKind());
-                jsonArray1.add(anotherjsonObject);
+        if (!"null".equals(String.valueOf(student.getId())) && !"0".equals(String.valueOf(student.getId()))
+                &&volunteers.size()!=0&&!"null".equals(String.valueOf(universityEnrollStudent.getStudentid()))
+                && !"0".equals(String.valueOf(universityEnrollStudent.getStudentid()))){
+            PrintWriter out=response.getWriter();
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("id",student.getId());
+            jsonObject.put("testId",student.getTestid());
+            jsonObject.put("name",student.getName());
+            jsonObject.put("gender",student.getGender());
+            jsonObject.put("regionId",student.getRegionid());
+            jsonObject.put("totalScore",student.getTotal_score());
+            jsonObject.put("rank",student.getRank());
+            JSONArray jsonArray1 = new JSONArray();
+            for (int i = 0; i < volunteers.size(); i++) {
+                ArrayList<major> majors=majorDao.searchMajor(volunteers.get(i).getClassid());
+                for(int j=0;j<majors.size();j++){
+                    JSONObject anotherjsonObject=new JSONObject();
+                    anotherjsonObject.put("classId",volunteers.get(i).getClassid());
+                    anotherjsonObject.put("regionId",student.getRegionid());
+                    anotherjsonObject.put("nmajor",majors.get(j).getNmajor());
+                    anotherjsonObject.put("nclass",majors.get(j).getNclass());
+                    anotherjsonObject.put("batch",volunteers.get(i).getBatch());
+                    anotherjsonObject.put("kind",majors.get(j).getKind());
+                    jsonArray1.add(anotherjsonObject);
+                }
             }
+            jsonObject.put("majors",jsonArray1);
+            String s=majorDao.searchClassname(universityEnrollStudent.getClass_id());
+            jsonObject.put("approvedMajorName",s);
+            jsonObject.put("approvedType",universityEnrollStudent.getType());
+            out.print(jsonObject);
+        }else {
+            response.sendError(403, "访问错误，请刷新后重试");
         }
-        jsonObject.put("majors",jsonArray1);
-        String s=majorDao.searchClassname(universityEnrollStudent.getClass_id());
-        jsonObject.put("approvedMajorName",s);
-        jsonObject.put("approvedType",universityEnrollStudent.getType());
 
-        out.print(jsonObject);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

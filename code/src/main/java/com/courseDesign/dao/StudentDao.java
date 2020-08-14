@@ -53,6 +53,11 @@ public class StudentDao extends BaseDao {
                 student.setRegionid(rs.getInt("regionid"));
                 student.setTotal_score(rs.getInt("total_score"));
                 student.setRank(rs.getInt("rank"));
+                student.setChinese_score(rs.getInt("chinese_score"));
+                student.setMath_score(rs.getInt("math_score"));
+                student.setEnglish_score(rs.getInt("english_score"));
+                student.setComp_score(rs.getInt("comp_score"));
+                student.setKind(rs.getInt("kind"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,13 +65,14 @@ public class StudentDao extends BaseDao {
         return student;
     }
 
-    public student searchStudentbytestid(int i){
+    public student searchStudentbytestid(long i,String name){
         student student=new student();
-        String sql= "select * from student where testid=?";
+        String sql= "select * from student where testid=? and name=?";
         try {
             Connection connection=DatabaseLink.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setInt(1,i);
+            pstmt.setLong(1,i);
+            pstmt.setString(2,name);
             ResultSet rs=pstmt.executeQuery();
             while (rs.next()){
                 student.setId(rs.getInt("id"));
@@ -76,6 +82,11 @@ public class StudentDao extends BaseDao {
                 student.setRegionid(rs.getInt("regionid"));
                 student.setTotal_score(rs.getInt("total_score"));
                 student.setRank(rs.getInt("rank"));
+                student.setChinese_score(rs.getInt("chinese_score"));
+                student.setMath_score(rs.getInt("math_score"));
+                student.setEnglish_score(rs.getInt("english_score"));
+                student.setComp_score(rs.getInt("comp_score"));
+                student.setKind(rs.getInt("kind"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
