@@ -1,6 +1,7 @@
 package com.courseDesign.servlet;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONArray;
 import com.courseDesign.dao.BaseDao;
 import com.courseDesign.javabean.university_enroll_student;
 import com.courseDesign.javabean.volunteer;
@@ -21,7 +22,7 @@ import java.util.logging.SimpleFormatter;
 
 @WebServlet(name = "rejectEnrolledStudent")
 public class rejectEnrolledStudent extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
         //设置缓冲区编码
@@ -39,16 +40,16 @@ public class rejectEnrolledStudent extends HttpServlet {
 
         // 读取请求内容
         //批量退选按钮，多个推选复选框都选后，点击批量退选按钮，前台传送学生id？
-
-        String students_id[]= request.getParameterValues("students_id");
+        
+        JSONArray students_id = (JSONArray) JSONArray.parse(request.getParameter("studentId"));
         university_enroll_student universityenrollstudent=new university_enroll_student();
         BaseDao baseDao=new BaseDao();
         int id=0;
         if(students_id ==null){
             System.out.println("没进行批量退选");
         }else {
-            for(int i=0;i<students_id.length;i++){
-                id=Integer.parseInt(students_id[i]);
+            for(int i=0;i<students_id.size();i++){
+                id=Integer.parseInt(students_id.getString(i));
                 String sql="update university_enroll_student set is_approved=-1 where id=?";
                 baseDao.executeUpdate(sql,id);
             }
@@ -58,7 +59,7 @@ public class rejectEnrolledStudent extends HttpServlet {
     }
 
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 }

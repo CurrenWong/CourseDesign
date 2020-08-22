@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-
+import com.alibaba.fastjson.JSONObject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,15 +62,24 @@ public class TestSubmitPlan extends EasyMockSupport {
 
     @Test
     public void testValidInput() {
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("planId", "8");
+        jsonObj.put("year", "2020");
+        jsonObj.put("regionId", "1");
+        jsonObj.put("classId", "1");
+        jsonObj.put("universityId", "1");
+        jsonObj.put("number", "10");
+        jsonObj.put("isApproved", "0");
+        jsonObj.put("approvedBy", "");
         // 设置参数
-        expect(request.getParameter("planId")).andReturn("8");
-        expect(request.getParameter("year")).andReturn("2020");
-        expect(request.getParameter("regionId")).andReturn("1");
-        expect(request.getParameter("classId")).andReturn("1");
-        expect(request.getParameter("universityId")).andReturn("1");
-        expect(request.getParameter("number")).andReturn("10");
-        expect(request.getParameter("isApproved")).andReturn("0");
-        expect(request.getParameter("approvedBy")).andReturn("");
+        expect(request.getParameter("planId")).andReturn(jsonObj.getString("planId"));
+        expect(request.getParameter("year")).andReturn(jsonObj.getString("year"));
+        expect(request.getParameter("regionId")).andReturn(jsonObj.getString("regionId"));
+        expect(request.getParameter("classId")).andReturn(jsonObj.getString("classId"));
+        expect(request.getParameter("universityId")).andReturn(jsonObj.getString("universityId"));
+        expect(request.getParameter("number")).andReturn(jsonObj.getString("number"));
+        expect(request.getParameter("isApproved")).andReturn(jsonObj.getString("isApproved"));
+        expect(request.getParameter("approvedBy")).andReturn(jsonObj.getString("approvedBy"));
         // 设置返回参数
         try {
             expect(response.getWriter()).andReturn(writer);
@@ -86,10 +95,7 @@ public class TestSubmitPlan extends EasyMockSupport {
             e.printStackTrace();
         }
         // 输出结果
-        System.out.println("TestSubmitPlan Input: " + "{" + "\"planId\": 1," + "\"year\": 2020," + "\"regionId\": 1,"
-                + "\"classId\": 5," + "\"universityId\": 1," + "\"number\": 20," + "\"isApproved\": 0,"
-                + "\"approvedBy\": \"李四\"" + "}\"");
-        System.out.println("TestSubmitPlan Output: " + "{\"StatusCode\":\"200\"}");
+        System.out.println("TestSubmitPlan Input: " + jsonObj.toJSONString());
         // 删除插入的数据
         String sql = "delete from dev.plan WHERE planid = ?;";
         BaseDao.executeUpdate(sql, 8);

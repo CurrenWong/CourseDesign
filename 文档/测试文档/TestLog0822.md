@@ -36,7 +36,9 @@ java.lang.AssertionError:
 
 ### 1.2. 错误原因1
 
-需求理解错误，输入为一个planId组成的数组`{planIdArray:["1", "2"]}`，需要读取为`JSONArray`，然后将每个planId的 `is_approved` 字段置为1，。参照[接口文档](https://app.swaggerhub.com/apis-docs/CurrenWong/CourseDesign/0.0.2#/EducationDepartment/post_approvePlan_do)。
+需求理解错误，输入为一个planId组成的数组`{planIdArray:[1, 2]}`，需要读取为`JSONArray`，然后将每个planId的 `is_approved` 字段置为1，。参照[接口文档](https://app.swaggerhub.com/apis-docs/CurrenWong/CourseDesign/0.0.2#/EducationDepartment/post_approvePlan_do)。
+
+参考`rejectEnrolledStudent.java`进行修改。
 
 ```java
 public student searchStudent(int i){
@@ -70,7 +72,7 @@ sources.TestApprovePlan.testInvalidInput  Time elapsed: 0 s  <<< FAILURE!
 java.lang.AssertionError:
 
   Unexpected method call HttpServletResponse.getWriter():
-    HttpServletResponse.sendError(402 (int), "提交失败，请刷新后重试"): expected: 1, actual: 0
+    HttpServletResponse.sendError(403 (int), "提交失败，请刷新后重试"): expected: 1, actual: 0
  at sources.TestApprovePlan.testInvalidInput(TestApprovePlan.java:106)
 
 sources.TestApprovePlan.testInvalidInput  Time elapsed: 0 s  <<< FAILURE!
@@ -83,7 +85,7 @@ java.lang.AssertionError:
 
 ### 1.4. 错误原因2
 
-未处理异常值。如果提交的id不存在，如`{planIdArray:["100", "200"]}`，应该返回状态码402和错误信息，`response.sendError(402, "提交失败，请刷新后重试");`。
+未处理异常值。如果提交的id不存在，如`{planIdArray:[100, 200]}`，应该返回状态码403和错误信息，`response.sendError(403, "提交失败，请刷新后重试");`。
 
 参考`findStudentById.java`进行修改。
 
@@ -107,8 +109,8 @@ if (!"null".equals(String.valueOf(student.getId())) && !"0".equals(String.valueO
     jsonObject.put("kind", student.getKind());
     out.print(jsonObject.toString());
 } else {
-    // 若学生不存在，返回状态码402
-    response.sendError(402, "id输入错误");
+    // 若学生不存在，返回状态码403
+    response.sendError(403, "id输入错误");
 }
 ```
 
@@ -157,7 +159,7 @@ sources.TestRejectPlan.testInvalidInput  Time elapsed: 0 s  <<< FAILURE!
 java.lang.AssertionError:
 
   Unexpected method call HttpServletResponse.getWriter():
-    HttpServletResponse.sendError(402 (int), "提交失败，请刷新后重试"): expected: 1, actual: 0
+    HttpServletResponse.sendError(403 (int), "提交失败，请刷新后重试"): expected: 1, actual: 0
  at sources.TestRejectPlan.testInvalidInput(TestRejectPlan.java:103)
 
 sources.TestRejectPlan.testInvalidInput  Time elapsed: 0 s  <<< FAILURE!
@@ -170,7 +172,7 @@ java.lang.AssertionError:
 
 ### 2.4. 错误原因2
 
-未处理异常值。如果提交的id不存在，如`{planIdArray:["100", "200"]}`，应该返回状态码402和错误信息，`response.sendError(402, "提交失败，请刷新后重试");`。
+未处理异常值。如果提交的id不存在，如`{planIdArray:["100", "200"]}`，应该返回状态码403和错误信息，`response.sendError(403, "提交失败，请刷新后重试");`。
 
 参考`findStudentById.java`进行修改。
 

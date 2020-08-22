@@ -21,7 +21,7 @@ import java.util.logging.SimpleFormatter;
 
 @WebServlet(name = "approveEnrolledStudent")
 public class approveEnrolledStudent extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
         //设置缓冲区编码
@@ -50,7 +50,7 @@ public class approveEnrolledStudent extends HttpServlet {
     }
 
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 }

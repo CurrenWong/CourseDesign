@@ -23,7 +23,7 @@ import java.util.HashMap;
 
 @WebServlet(name = "findApprovedStudent",urlPatterns = "/findApprovedStudent.do")
 public class findApprovedStudent extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -35,7 +35,7 @@ public class findApprovedStudent extends HttpServlet {
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
 
 
-        int studentId= Integer.parseInt(request.getParameter("studentId").toString());
+        int studentId= Integer.parseInt(request.getParameter("universityId").toString());
 
         StudentDao studentDao =new StudentDao();
         MajorDao majorDao=new MajorDao();
@@ -80,7 +80,7 @@ public class findApprovedStudent extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
     }
 }
