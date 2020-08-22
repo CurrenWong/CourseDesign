@@ -11,9 +11,10 @@ import java.util.ArrayList;
 public class MajorDao {
     public ArrayList<major> searchMajor(int i){
         ArrayList<major> majors=new ArrayList<major>();
-        String sql= "select * from major where classid=?";
+        String sql = "select * from major where classid=?";
+        Connection connection = null;
         try {
-            Connection connection=DatabaseLink.getConnection();
+            connection=DatabaseLink.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1,i);
             ResultSet rs=pstmt.executeQuery();
@@ -28,6 +29,13 @@ public class MajorDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return majors;
     }

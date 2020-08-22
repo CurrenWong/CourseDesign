@@ -20,7 +20,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-//这是JUnit的注解，通过这个注解让SpringJUnit4ClassRunner这个类提供Spring测试上下文。
 public class TestFindStudentByTestid extends EasyMockSupport {
     private findStudentByTestid servlet;
     private HttpServletRequest request;

@@ -1,18 +1,16 @@
 package sources;
 
 import static org.easymock.EasyMock.expect;
-import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import com.courseDesign.dao.BaseDao;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.alibaba.fastjson.JSONObject;
 import com.courseDesign.servlet.rejectPlan;
 
 import org.easymock.EasyMockSupport;
@@ -20,7 +18,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-//这是JUnit的注解，通过这个注解让SpringJUnit4ClassRunner这个类提供Spring测试上下文。
 public class TestRejectPlan extends EasyMockSupport {
     private rejectPlan servlet;
     private HttpServletRequest request;

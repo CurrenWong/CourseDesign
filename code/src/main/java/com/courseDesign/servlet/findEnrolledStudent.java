@@ -21,7 +21,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@WebServlet(name = "findEnrolledStudent", urlPatterns = "/findEnrollStudent.do")
+@WebServlet(name = "findEnrolledStudent", urlPatterns = "/findEnrolledStudent.do")
 public class findEnrolledStudent extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");

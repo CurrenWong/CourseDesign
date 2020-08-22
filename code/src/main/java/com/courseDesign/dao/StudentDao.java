@@ -1,27 +1,23 @@
 package com.courseDesign.dao;
 
-import com.courseDesign.javabean.major;
-import com.courseDesign.javabean.student;
-import com.courseDesign.javabean.university_enroll_student;
-import com.courseDesign.javabean.volunteer;
-
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import com.courseDesign.javabean.student;
+import com.courseDesign.javabean.university_enroll_student;
+import com.courseDesign.javabean.volunteer;
 
 public class StudentDao extends BaseDao {
 
     public student login(String username, String password) {
         String sql = "select * from student where username=  '" + username + "' and password='" + password + "' ";
         student st = null;
+        Connection coon = null;
         try {
-            Connection coon = DatabaseLink.getConnection();
+            coon = DatabaseLink.getConnection();
             PreparedStatement pstmt = coon.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -34,6 +30,13 @@ public class StudentDao extends BaseDao {
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } finally {
+            // 释放数据库连接
+            try {
+                coon.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return st;
     }

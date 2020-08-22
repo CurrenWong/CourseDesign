@@ -13,8 +13,9 @@ public class CountrydepartDao extends BaseDao{
     public education_department login(String username, String password) {
         String sql = "select * from education_department where username=  '" + username + "' and password='" + password + "' ";
         education_department st = null;
+        Connection coon = null;
         try {
-            Connection coon = DatabaseLink.getConnection();
+            coon = DatabaseLink.getConnection();
             PreparedStatement pstmt = coon.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -27,6 +28,13 @@ public class CountrydepartDao extends BaseDao{
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } finally {
+            try {
+                coon.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return st;
     }
