@@ -83,7 +83,7 @@ public class TestFindStudentByTestid extends EasyMockSupport {
             e.printStackTrace();
         }
         // 输出结果
-        System.out.println("TestFindStudentByTestid Input: " + "{\"id\":\"1\"}");
+        System.out.println("TestFindStudentByTestid Input: " + "{\"name\":\"王一\", \"testId\":\"19875426874625\"}");
         System.out.println("TestFindStudentByTestid Output: " + out.toString());
         // 返回结果存储在JSON中
         JSONObject js = (JSONObject) JSONObject.parse(out.toString());
@@ -123,7 +123,7 @@ public class TestFindStudentByTestid extends EasyMockSupport {
             e.printStackTrace();
         }
         // 输出结果
-        System.out.println("TestFindStudentByTestid Input: " + "{\"id\":\"0\"}");
+        System.out.println("TestFindStudentByTestid Input: " + "{\"name\":\"王一\", \"testId\":\"0\"}");
         System.out.println("TestFindStudentByTestid Output: " + "{\"StatusCode\":\"402\"}");
     }
     
@@ -148,7 +148,7 @@ public class TestFindStudentByTestid extends EasyMockSupport {
             e.printStackTrace();
         }
         // 输出结果
-        System.out.println("TestFindStudentByTestid Input: " + "{\"id\":\"0\"}");
+        System.out.println("TestFindStudentByTestid Input: " + "{\"name\":\"王一\", \"testId\":\"12345824562584\"}");
         System.out.println("TestFindStudentByTestid Output: " + "{\"StatusCode\":\"402\"}");
     }
 }
