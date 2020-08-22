@@ -1,8 +1,6 @@
 package sources;
 
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.getCurrentArgument;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;

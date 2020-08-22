@@ -7,14 +7,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-
+import com.courseDesign.dao.BaseDao;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.courseDesign.servlet.findEnrolledStudent;
+import com.courseDesign.servlet.submitPlan;
 
 import org.easymock.EasyMockSupport;
 import org.junit.After;
@@ -22,18 +21,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 //这是JUnit的注解，通过这个注解让SpringJUnit4ClassRunner这个类提供Spring测试上下文。
-public class TestFindEnrolledStudent extends EasyMockSupport {
-    private findEnrolledStudent servlet;
+public class TestSubmitPlan extends EasyMockSupport {
+    private submitPlan servlet;
     private HttpServletRequest request;
     private HttpServletResponse response;
     StringWriter out;
     PrintWriter writer;
 
+    // private WebApplicationContext context;
     // 测试方法执行前
     @Before
     public void setUp() {
         // 创建Servlet
-        servlet = new findEnrolledStudent();
+        servlet = new submitPlan();
         // 创建字符输出流
         out = new StringWriter();
         writer = new PrintWriter(out);
@@ -64,9 +64,15 @@ public class TestFindEnrolledStudent extends EasyMockSupport {
 
     @Test
     public void testValidInput() {
-
         // 设置参数
+        expect(request.getParameter("planId")).andReturn("8");
+        expect(request.getParameter("year")).andReturn("2020");
+        expect(request.getParameter("regionId")).andReturn("1");
+        expect(request.getParameter("classId")).andReturn("1");
         expect(request.getParameter("universityId")).andReturn("1");
+        expect(request.getParameter("number")).andReturn("10");
+        expect(request.getParameter("isApproved")).andReturn("0");
+        expect(request.getParameter("approvedBy")).andReturn("");
         // 设置返回参数
         try {
             expect(response.getWriter()).andReturn(writer);
@@ -82,54 +88,13 @@ public class TestFindEnrolledStudent extends EasyMockSupport {
             e.printStackTrace();
         }
         // 输出结果
-        System.out.println("TestFindEnrolledStudent Input: " + "{\"universityId\":\"1\"}");
-        System.out.println("TestFindEnrolledStudent Output: " + out.toString());
-        // 返回结果存储在JSONArray中
-        JSONArray jsArray = (JSONArray) JSONObject.parse(out.toString());
-
-        // 确认返回结果
-        // 返回对象
-        JSONObject js = (JSONObject) jsArray.get(0);
-        // 确认个人信息
-        assertEquals(1, js.get("id"));
-        assertEquals(19875426874625L, js.get("testId"));
-        assertEquals("王一", js.get("name"));
-        assertEquals("男", js.get("gender"));
-        assertEquals(5, js.get("regionId"));
-        assertEquals(698, js.get("totalScore"));
-        assertEquals(200, js.get("rank"));
-        // 确认专业
-        JSONArray majors = (JSONArray) js.get("majors");
-        JSONObject major = (JSONObject) majors.get(0);
-        assertEquals("经济与贸易类", major.get("nclass"));
-        assertEquals("国际经济与贸易、金融学、税收学、管理科学", major.get("nmajor"));
-        assertEquals(5, major.get("classId"));
-        assertEquals(5, major.get("regionId"));
-        assertEquals(1, major.get("kind"));
-        assertEquals(1, major.get("batch"));
-    }
-
-    @Test
-    public void testInvalidInput() {
-        // 设置参数
-        expect(request.getParameter("universityId")).andReturn("0");
-        // 设置返回参数
-        try {
-            response.sendError(403, "访问错误，请刷新后重试");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // 切换到replay模式
-        replayAll();
-        // 发送post请求
-        try {
-            servlet.doPost(request, response);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
-        // 输出结果
-        System.out.println("TestFindEnrolledStudent Input: " + "{\"universityId\":\"0\"}");
-        System.out.println("TestFindEnrolledStudent Output: " + "{\"StatusCode\":\"403\"}");
+        System.out.println("TestSubmitPlan Input: " + "{" + "\"planId\": 1," + "\"year\": 2020," + "\"regionId\": 1,"
+                + "\"classId\": 5," + "\"universityId\": 1," + "\"number\": 20," + "\"isApproved\": 0,"
+                + "\"approvedBy\": \"李四\"" + "}\"");
+        System.out.println("TestSubmitPlan Output: " + "{\"StatusCode\":\"200\"}");
+        // 删除插入的数据
+        BaseDao baseDao = new BaseDao();
+        String sql = "delete from dev.plan WHERE planid = ?;";
+        baseDao.executeUpdate(sql, 8);
     }
 }

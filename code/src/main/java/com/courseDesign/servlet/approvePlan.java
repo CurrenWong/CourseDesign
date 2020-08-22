@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 @WebServlet(name = "approvePlan",urlPatterns = "/approvePlan.do")
 public class approvePlan extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
@@ -32,7 +32,7 @@ public class approvePlan extends HttpServlet {
         baseDao.executeUpdate(sql,is_approved);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
     }
 }
