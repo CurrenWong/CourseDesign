@@ -27,10 +27,28 @@ public class rejectPlan  extends HttpServlet {
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
         PrintWriter out=response.getWriter();
     
-        int is_approved=Integer.parseInt(request.getParameter("is_approved").toString());
+       
+        JSONArray planid0 = (JSONArray) JSONArray.parse(request.getParameter("planid"));
         BaseDao baseDao=new BaseDao();
-        String sql="update plan set is_approve=0";
-        baseDao.executeUpdate(sql,is_approved);
+        int planid=0;
+        if(planid0 ==null){
+            System.out.println("没进行批量退选");
+        }else {
+
+            for (int i = 0; i < planid0.size(); i++) {
+                planid = Integer.parseInt(planid0.getString(i));
+                String sql0="select * from plan  where planid=?";
+                plan plan0 = (plan) baseDao.executeQuery(sql0,planid);
+                if(plan0==null){
+                    response.sendError(403, "提交失败，请刷新后重试");
+                }
+                else {
+                    String sql = "update plan set is_approved=-1 where planid=?";
+                    baseDao.executeUpdate(sql, planid);
+                }
+            }
+
+        }
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
