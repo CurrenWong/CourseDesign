@@ -54,10 +54,10 @@ public class University_Enroll_StudentDao {
     }
 
     public ArrayList<plan> SearchPlan() {
+        Connection connection = DatabaseLink.getConnection();
         ArrayList<plan> plans = new ArrayList<plan>();
         String sql = "select * from plan order by universityid,regionid";
         try {
-            Connection connection = DatabaseLink.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -74,14 +74,21 @@ public class University_Enroll_StudentDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return plans;
     }
 
     public void insertUES(university_enroll_student student) {
+        Connection connection = DatabaseLink.getConnection();
         String sql = "insert into university_enroll_student(studentid,universityid,year,type,class_id,is_approved) values (?,?,?,?,?,?)";
         try {
-            Connection connection = DatabaseLink.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, student.getStudentid());
             pstmt.setInt(2, student.getUniversityid());
@@ -92,6 +99,13 @@ public class University_Enroll_StudentDao {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
 

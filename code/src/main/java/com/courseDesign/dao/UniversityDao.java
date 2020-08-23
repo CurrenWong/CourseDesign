@@ -44,10 +44,9 @@ public class UniversityDao extends BaseDao {
 
     public ArrayList<volunteer> searchVolunteer(int i) {
         ArrayList<volunteer> volunteers = new ArrayList<volunteer>();
-
+        Connection connection = DatabaseLink.getConnection();
         String sql = "select * from volunteer where universityid=?";
         try {
-            Connection connection = DatabaseLink.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, i);
             ResultSet rs = pstmt.executeQuery();
@@ -65,6 +64,13 @@ public class UniversityDao extends BaseDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return volunteers;
     }

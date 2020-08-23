@@ -42,9 +42,9 @@ public class StudentDao extends BaseDao {
     }
     public student searchStudent(int i){
         student student=new student();
+        Connection connection=DatabaseLink.getConnection();
         String sql= "select * from student where id=?";
         try {
-            Connection connection=DatabaseLink.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1,i);
             ResultSet rs=pstmt.executeQuery();
@@ -64,15 +64,22 @@ public class StudentDao extends BaseDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return student;
     }
 
     public student searchStudentbytestid(long i,String name){
         student student=new student();
+        Connection connection=DatabaseLink.getConnection();
         String sql= "select * from student where testid=? and name=?";
         try {
-            Connection connection=DatabaseLink.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1,i);
             pstmt.setString(2,name);
@@ -93,16 +100,22 @@ public class StudentDao extends BaseDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return student;
     }
 
     public ArrayList<volunteer> searchVolunteer(int i){
         ArrayList<volunteer> volunteers=new ArrayList<volunteer>();
-
+        Connection connection=DatabaseLink.getConnection();
         String sql= "select * from volunteer where studentid=?";
         try {
-            Connection connection=DatabaseLink.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1,i);
             ResultSet rs=pstmt.executeQuery();
@@ -120,15 +133,22 @@ public class StudentDao extends BaseDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return volunteers;
     }
 
     public university_enroll_student searchUES(int i){
+        Connection connection=DatabaseLink.getConnection();
         university_enroll_student universityEnrollStudent=new university_enroll_student();
         String sql= "select * from university_enroll_student where studentid=?";
         try {
-            Connection connection=DatabaseLink.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1,i);
             ResultSet rs=pstmt.executeQuery();
@@ -143,6 +163,13 @@ public class StudentDao extends BaseDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return  universityEnrollStudent;
     }
