@@ -27,14 +27,14 @@ public class submitPlan extends HttpServlet {
         PrintWriter out=response.getWriter();
         // 读取请求内容
   
-        int planid= Integer.parseInt(request.getParameter("planid").toString());
+        int planid= Integer.parseInt(request.getParameter("planId").toString());
         String year =request.getParameter("year").toString();
-        int regionid=Integer.parseInt(request.getParameter("regionid").toString());
-        int classid=Integer.parseInt(request.getParameter("classid").toString());
-        int universotyid=Integer.parseInt(request.getParameter("universotyid").toString());
+        int regionid=Integer.parseInt(request.getParameter("regionId").toString());
+        int classid=Integer.parseInt(request.getParameter("classId").toString());
+        int universotyid=Integer.parseInt(request.getParameter("universityId").toString());
         int number=Integer.parseInt(request.getParameter("number").toString());
-        int is_approved=Integer.parseInt(request.getParameter("is_approved").toString());
-        String approved_by=request.getParameter("approved_by").toString();
+        int is_approved=Integer.parseInt(request.getParameter("isApproved").toString());
+        String approved_by=request.getParameter("approvedBy").toString();
         BaseDao baseDao=new BaseDao();
         String sql="insert into plan（planid,year,regionid,classid,universotyid,number,is_approved,approved_by） values(?,?,?,?,?,?,?,?)";
         baseDao.executeUpdate(sql,planid,year,regionid,classid,universotyid,number,is_approved,approved_by);
