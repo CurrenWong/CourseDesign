@@ -80,6 +80,7 @@ public class TestSubmitVolunteer extends EasyMockSupport {
         expect(request.getParameter("classId")).andReturn(jsonObj.getString("classId"));
         expect(request.getParameter("isApproved")).andReturn(jsonObj.getString("isApproved"));
         expect(request.getParameter("type")).andReturn(jsonObj.getString("type"));
+        expect(request.getParameter("classRank")).andReturn(jsonObj.getString("1"));
         // 设置返回参数
         try {
             expect(response.getWriter()).andReturn(writer);
