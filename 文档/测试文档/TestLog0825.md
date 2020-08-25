@@ -161,6 +161,8 @@ if(planid0 ==null){
 }
 ```
 
+### 4.3. 负责人-余文婧
+
 ## 5. findEnrollmentResultById
 
 ### 5.1. testValidInput
@@ -249,6 +251,8 @@ java.lang.AssertionError:
 
 参考`findStudentById.java`进行修改。
 
+### 5.3. 负责人-龚美
+
 ## 6. rejectEnrolledStudent
 
 ### 6.1. testInvalidInput
@@ -269,6 +273,8 @@ java.lang.AssertionError:
     HttpServletResponse.sendError(403 (int), "提交错误，请刷新后重试"): expected: 1, actual: 0
     at sources.TestRejectEnrolledStudent.tearDown(TestRejectEnrolledStudent.java:62)
 ```
+
+### 6.2. 负责人-龚美
 
 ## 7. rejectPlan
 
@@ -313,9 +319,13 @@ if(planid0 ==null){
 }
 ```
 
+### 7.3. 负责人-余文婧
+
 ## 8. submitVolunteer
 
 ### 8.1. testValidInput
+
+#### 8.1.1. 输入读取错误
 
 未按照接口文件读取输入
 
@@ -347,7 +357,9 @@ int classid=Integer.parseInt(request.getParameter("classid").toString());
 String type=request.getParameter("type").toString();
 ```
 
-### 8.2. testInvalidInput
+`volunteerid`在插入时可以设置为`null`，使用`mysql`自增主键`id`。
+
+### 8.2. 负责人-龚美
 
 ## 9. findApprovedStudent
 
@@ -360,8 +372,17 @@ java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to 
 
 #### 9.1.1. 文档错误
 
-文档中原本标注的输入描述为学校编号，字段应为`universityId`，但是错写为了`studentId`，因此引发了误解。
+文档中原本标注的输入描述为学校编号，字段应为`universityId`，但是我错写为了`studentId`，因此引发了误解。
 
-目前接口测试通过，但是测试逻辑是通过学生id查询的，而不是通过学校id查询的，需要修改为和`findEnrolledStudent.java` 类似的功能，查找输入的`universityId`在录取表中 `is_approved` 字段为1的学生信息。
+目前测试逻辑是通过学生id查询的，而不是通过学校id查询的，需要修改为和`findEnrolledStudent.java` 类似的功能，查找输入的`universityId`在录取表中 `is_approved` 字段为1的学生信息。
 
-返回类型应为JSONArray。
+#### 9.1.2. 返回类型错误
+
+```cpp
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.alibaba.fastjson.JSONArray
+    at sources.TestFindApprovedStudent.testValidInput(TestFindApprovedStudent.java:88)
+```
+
+返回类型应为JSONArray组成的字符串，目前返回的是JSONObject字符串。
+
+### 9.2. 负责人-闫开元
