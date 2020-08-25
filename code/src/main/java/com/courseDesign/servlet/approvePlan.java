@@ -23,7 +23,7 @@ public class approvePlan extends HttpServlet {
         PrintWriter out=response.getWriter();
         // 读取请求内容
    
-       JSONArray planid0 = (JSONArray) JSONArray.parse(request.getParameter("planid"));
+       JSONArray planid0 = (JSONArray) JSONArray.parse(request.getParameter("planIdArray"));
        // plan plan=new plan();
         BaseDao baseDao=new BaseDao();
         int planid=0;

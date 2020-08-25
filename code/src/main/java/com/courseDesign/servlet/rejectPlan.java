@@ -1,14 +1,17 @@
 package com.courseDesign.servlet;
 
-import com.alibaba.fastjson.JSONArray;
-import com.courseDesign.dao.BaseDao;
-import com.courseDesign.javabean.plan;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import com.alibaba.fastjson.JSONArray;
+import com.courseDesign.dao.BaseDao;
+import com.courseDesign.javabean.plan;
 
 
 @WebServlet(name = "rejectPlan",urlPatterns = "/rejectPlan.do")
@@ -25,7 +28,7 @@ public class rejectPlan  extends HttpServlet {
         PrintWriter out=response.getWriter();
     
        
-        JSONArray planid0 = (JSONArray) JSONArray.parse(request.getParameter("planid"));
+        JSONArray planid0 = (JSONArray) JSONArray.parse(request.getParameter("planIdArray"));
         BaseDao baseDao=new BaseDao();
         int planid=0;
         if(planid0 ==null){
