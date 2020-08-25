@@ -63,7 +63,7 @@ public class TestApprovePlan extends EasyMockSupport {
     @Test
     public void testValidInput() {
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("planIdArray", "[1, 2");
+        jsonObj.put("planIdArray", "[1, 2]");
         // 设置参数
         expect(request.getParameter("planIdArray")).andReturn(jsonObj.getString("planIdArray"));
         // 设置返回参数
@@ -91,7 +91,7 @@ public class TestApprovePlan extends EasyMockSupport {
     @Test
     public void testInvalidInput() {
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("planIdArray", "[100, 200");
+        jsonObj.put("planIdArray", "[100, 200]");
         // 设置参数
         expect(request.getParameter("planIdArray")).andReturn(jsonObj.getString("planIdArray"));
         // 设置返回参数

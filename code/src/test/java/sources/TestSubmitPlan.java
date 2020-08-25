@@ -99,5 +99,6 @@ public class TestSubmitPlan extends EasyMockSupport {
         // 删除插入的数据
         String sql = "delete from dev.plan WHERE planid = ?;";
         BaseDao.executeUpdate(sql, 8);
+        System.out.println("TestSubmitPlan Output: " + "{StatusCode: 200}");
     }
 }

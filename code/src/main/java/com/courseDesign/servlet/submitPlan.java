@@ -36,7 +36,7 @@ public class submitPlan extends HttpServlet {
         int is_approved=Integer.parseInt(request.getParameter("isApproved").toString());
         String approved_by=request.getParameter("approvedBy").toString();
         BaseDao baseDao=new BaseDao();
-        String sql="insert into plan（planid,year,regionid,classid,universotyid,number,is_approved,approved_by） values(?,?,?,?,?,?,?,?)";
+        String sql = "insert into plan ( planid,year,regionid,classid,universityid,number,is_approved,approved_by) values(?,?,?,?,?,?,?,?)";
         baseDao.executeUpdate(sql,planid,year,regionid,classid,universotyid,number,is_approved,approved_by);
     }
 

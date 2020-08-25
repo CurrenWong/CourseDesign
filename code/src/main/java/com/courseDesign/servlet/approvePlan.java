@@ -20,7 +20,7 @@ public class approvePlan extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         /* 星号表示所有的异域请求都可以接受， */
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
-        PrintWriter out=response.getWriter();
+        
         // 读取请求内容
    
        JSONArray planid0 = (JSONArray) JSONArray.parse(request.getParameter("planIdArray"));
@@ -30,13 +30,13 @@ public class approvePlan extends HttpServlet {
         if(planid0 ==null){
             System.out.println("没进行批量退选");
         }else {
-
+            PrintWriter out=response.getWriter();
             for (int i = 0; i < planid0.size(); i++) {
                 planid = Integer.parseInt(planid0.getString(i));
                 String sql0="select * from plan  where planid=?";
                 plan plan0 = (plan) baseDao.executeQuery(sql0,planid);
                 if(plan0==null){
-                    response.sendError(403, "提交失败，请刷新后重试");
+                    response.sendError(402, "提交失败，请刷新后重试");
                 }
                 else {
                     String sql = "update plan set is_approved=1 where planid=?";

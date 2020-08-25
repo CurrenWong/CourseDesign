@@ -62,6 +62,7 @@ public class TestFindApprovedStudent extends EasyMockSupport {
         verifyAll();
     }
 
+    @Test
     public void testValidInput() {
 
         // 设置参数
@@ -106,6 +107,9 @@ public class TestFindApprovedStudent extends EasyMockSupport {
         assertEquals(5, major.get("regionId"));
         assertEquals(1, major.get("kind"));
         assertEquals(1, major.get("batch"));
+        // 确认录取信息
+        assertEquals("经济与贸易类", major.get("approvedMajorName"));
+        assertEquals("统招", major.get("approvedType"));
     }
 
     @Test
