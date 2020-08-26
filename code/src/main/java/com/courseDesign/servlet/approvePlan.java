@@ -23,29 +23,25 @@ public class approvePlan extends HttpServlet {
         
         // 读取请求内容
    
-       JSONArray planid0 = (JSONArray) JSONArray.parse(request.getParameter("planIdArray"));
+     
+      JSONArray planIdArray = (JSONArray) JSONArray.parse(request.getParameter("planIdArray"));
        // plan plan=new plan();
         BaseDao baseDao=new BaseDao();
         int planid=0;
-        if(planid0 ==null){
+        if(planIdArray ==null){
             System.out.println("没进行批量退选");
         }else {
             PrintWriter out=response.getWriter();
-            for (int i = 0; i < planid0.size(); i++) {
-                planid = Integer.parseInt(planid0.getString(i));
-                String sql0="select * from plan  where planid=?";
-                plan plan0 = (plan) baseDao.executeQuery(sql0,planid);
-                if(plan0==null){
-                    response.sendError(402, "提交失败，请刷新后重试");
-                }
-                else {
+            for (int i = 0; i < planIdArray.size(); i++) {
+                planid = Integer.parseInt(planIdArray.getString(i));
                     String sql = "update plan set is_approved=1 where planid=?";
                     baseDao.executeUpdate(sql, planid);
-                }
+            
             }
 
         }
     }
+
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
