@@ -28,24 +28,17 @@ public class rejectPlan  extends HttpServlet {
         PrintWriter out=response.getWriter();
     
        
-        JSONArray planid0 = (JSONArray) JSONArray.parse(request.getParameter("planIdArray"));
+         JSONArray planIdArray = (JSONArray) JSONArray.parse(request.getParameter("planIdArray"));
         BaseDao baseDao=new BaseDao();
         int planid=0;
-        if(planid0 ==null){
+        if(planIdArray ==null){
             System.out.println("没进行批量退选");
         }else {
-
-            for (int i = 0; i < planid0.size(); i++) {
-                planid = Integer.parseInt(planid0.getString(i));
-                String sql0="select * from plan  where planid=?";
-                plan plan0 = (plan) baseDao.executeQuery(sql0,planid);
-                if(plan0==null){
-                    response.sendError(403, "提交失败，请刷新后重试");
-                }
-                else {
+            for (int i = 0; i < planIdArray.size(); i++) {
+                planid = Integer.parseInt(planIdArray.getString(i));
                     String sql = "update plan set is_approved=-1 where planid=?";
                     baseDao.executeUpdate(sql, planid);
-                }
+
             }
 
         }
