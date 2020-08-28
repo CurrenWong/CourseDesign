@@ -96,7 +96,7 @@ public class TestApprovePlan extends EasyMockSupport {
         expect(request.getParameter("planIdArray")).andReturn(jsonObj.getString("planIdArray"));
         // 设置返回参数
         try {
-            response.sendError(402, "提交失败，请刷新后重试");
+            response.sendError(403, "提交失败，请刷新后重试");
         } catch (IOException e) {
             e.printStackTrace();
         }
