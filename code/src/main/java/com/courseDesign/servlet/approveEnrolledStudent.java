@@ -48,6 +48,7 @@ public class approveEnrolledStudent extends HttpServlet {
 
         University_Enroll_StudentDao uesDao=new University_Enroll_StudentDao();
 
+        if(studentId.size()!=0){
             for(int i=0;i<studentId.size();i++){
                 int j= Integer.parseInt(studentId.getString(i));
                 university_enroll_student student=uesDao.SearchSignal1(j);
@@ -58,6 +59,9 @@ public class approveEnrolledStudent extends HttpServlet {
                     break;
                 }
             }
+        }else {
+            response.sendError(403, "提交错误，请刷新后重试");
+        }
     }
 
 
