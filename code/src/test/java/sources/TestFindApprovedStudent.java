@@ -108,8 +108,8 @@ public class TestFindApprovedStudent extends EasyMockSupport {
         assertEquals(1, major.get("kind"));
         assertEquals(1, major.get("batch"));
         // 确认录取信息
-        assertEquals("经济与贸易类", major.get("approvedMajorName"));
-        assertEquals("统招", major.get("approvedType"));
+        assertEquals("经济与贸易类", js.get("approvedMajorName"));
+        assertEquals("统招", js.get("approvedType"));
     }
 
     @Test

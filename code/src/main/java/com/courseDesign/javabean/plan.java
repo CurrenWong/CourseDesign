@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class plan {
     public int planid;
-    public Date year;
+    public int year;
     public int regionid;
     public int classid;
     public int universotyid;
@@ -20,11 +20,11 @@ public class plan {
         this.planid = planid;
     }
 
-    public Date getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(int year) {
         this.year = year;
     }
 

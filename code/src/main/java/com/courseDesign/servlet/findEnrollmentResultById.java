@@ -55,7 +55,7 @@ public class findEnrollmentResultById extends HttpServlet {
         ues.setId((Integer) map.get("id"));
         ues.setStudentid((Integer) map.get("studentid"));
         ues.setUniversityid((Integer) map.get("universityid"));
-        ues.setYear((Date) map.get("year"));
+        ues.setYear((Integer) map.get("year"));
         ues.setType((String) map.get("type"));
         ues.setClass_id((Integer) map.get("class_id"));
         ues.setIs_approved((Integer) map.get("is_approved"));

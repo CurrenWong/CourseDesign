@@ -6,7 +6,7 @@ public class university_enroll_student {
     public int id;
     public int studentid;
     public int universityid;
-    public Date year;
+    public int year;
     public String type;
     public int class_id;
     public int is_approved;
@@ -35,11 +35,11 @@ public class university_enroll_student {
         this.universityid = universityid;
     }
 
-    public Date getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(int year) {
         this.year = year;
     }
 

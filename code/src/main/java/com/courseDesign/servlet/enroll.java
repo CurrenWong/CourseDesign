@@ -37,14 +37,15 @@ public class enroll extends HttpServlet {
         if(studentAndVolunteers.size()!=0){
             PrintWriter out=response.getWriter();
             for(int j=0;j<plans.size();j++){
-                Date year=plans.get(j).getYear();
+                int year=plans.get(j).getYear();
                 int count=plans.get(j).getNumber();
                 int classid=plans.get(j).getClassid();
                 int regionid=plans.get(j).getRegionid();
                 int university=plans.get(j).getUniversotyid();
                 for(int m=0;m<studentAndVolunteers.size();m++){
                     if(regionid==studentAndVolunteers.get(m).getRegionid()&&university==studentAndVolunteers.get(m).getUniversityid()&&
-                            classid==studentAndVolunteers.get(m).getClassid()&&count>0){
+                            classid==studentAndVolunteers.get(m).getClassid()&&count>0
+                            &&universityEnrollStudentDao.SearchSignal(studentAndVolunteers.get(m).getStudentid())){
                         university_enroll_student student=new university_enroll_student();
                         student.setIs_approved(0);
                         student.setYear(year);

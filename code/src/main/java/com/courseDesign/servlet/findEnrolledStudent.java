@@ -5,8 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.courseDesign.dao.MajorDao;
 import com.courseDesign.dao.StudentDao;
 import com.courseDesign.dao.UniversityDao;
+import com.courseDesign.dao.University_Enroll_StudentDao;
 import com.courseDesign.javabean.major;
 import com.courseDesign.javabean.student;
+import com.courseDesign.javabean.university_enroll_student;
 import com.courseDesign.javabean.volunteer;
 
 import javax.servlet.ServletException;
@@ -35,44 +37,44 @@ public class findEnrolledStudent extends HttpServlet {
 
         int universityId = Integer.parseInt(request.getParameter("universityId").toString());
 
-        UniversityDao universityDao = new UniversityDao();
+        StudentDao studentDao=new StudentDao();
+        University_Enroll_StudentDao universityEnrollStudentDao=new University_Enroll_StudentDao();
         MajorDao majorDao = new MajorDao();
-        ArrayList<volunteer> volunteers = universityDao.searchVolunteer(universityId);
-        if(!(volunteers.size() ==0)){
+        ArrayList<university_enroll_student> universityEnrollStudents = universityEnrollStudentDao.searchUES2(universityId);
+        if(universityEnrollStudents.size() !=0){
             PrintWriter out = response.getWriter();
-            JSONArray jsonArray = new JSONArray();
-            for (int i = 0; i < volunteers.size(); i++) {
-                JSONObject jsonObject = new JSONObject();
+            JSONArray jsonArray=new JSONArray();
+            for(int i=0;i<universityEnrollStudents.size();i++){
+                JSONObject jsonObject=new JSONObject();
+                student student=studentDao.searchStudent(universityEnrollStudents.get(i).getStudentid());
+                jsonObject.put("id",student.getId());
+                jsonObject.put("testId",student.getTestid());
+                jsonObject.put("name",student.getName());
+                jsonObject.put("gender",student.getGender());
+                jsonObject.put("regionId",student.getRegionid());
+                jsonObject.put("totalScore",student.getTotal_score());
+                jsonObject.put("rank",student.getRank());
                 JSONArray jsonArray1 = new JSONArray();
-                ArrayList<major> majors = majorDao.searchMajor(volunteers.get(i).getClassid());
-                StudentDao studentDao = new StudentDao();
-                student student = studentDao.searchStudent(volunteers.get(i).getStudentid());
-                for (int j = 0; j < majors.size(); j++) {
-                    JSONObject anotherjsonObject = new JSONObject();
-                    anotherjsonObject.put("classId", volunteers.get(i).getClassid());
-                    anotherjsonObject.put("regionId", student.getRegionid());
-                    anotherjsonObject.put("nmajor", majors.get(j).getNmajor());
-                    anotherjsonObject.put("nclass", majors.get(j).getNclass());
-                    anotherjsonObject.put("batch", volunteers.get(i).getBatch());
-                    anotherjsonObject.put("kind", majors.get(j).getKind());
+                ArrayList<volunteer> volunteers =studentDao.searchVolunteer(universityEnrollStudents.get(i).getStudentid(),universityId);
+                for (int m = 0; m < volunteers.size(); m++) {
+                    major major=majorDao.searchMajor(volunteers.get(m).getClassid());
+                    JSONObject anotherjsonObject=new JSONObject();
+                    anotherjsonObject.put("classId",volunteers.get(m).getClassid());
+                    anotherjsonObject.put("regionId",student.getRegionid());
+                    anotherjsonObject.put("nmajor",major.getNmajor());
+                    anotherjsonObject.put("nclass",major.getNclass());
+                    anotherjsonObject.put("batch",volunteers.get(m).getBatch());
+                    anotherjsonObject.put("kind",major.getKind());
                     jsonArray1.add(anotherjsonObject);
                 }
-                jsonObject.put("majors", jsonArray1);
-                jsonObject.put("id", student.getId());
-                jsonObject.put("testId", student.getTestid());
-                jsonObject.put("name", student.getName());
-                jsonObject.put("gender", student.getGender());
-                jsonObject.put("regionId", student.getRegionid());
-                jsonObject.put("totalScore", student.getTotal_score());
-                jsonObject.put("rank", student.getRank());
 
+                jsonObject.put("majors",jsonArray1);
                 jsonArray.add(jsonObject);
             }
             out.print(jsonArray.toString());
         }else{
             response.sendError(403, "访问错误，请刷新后重试");
         }
-
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

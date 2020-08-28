@@ -1,7 +1,9 @@
 package com.courseDesign.servlet;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.courseDesign.dao.BaseDao;
+import com.courseDesign.dao.University_Enroll_StudentDao;
 import com.courseDesign.javabean.university_enroll_student;
 import com.courseDesign.javabean.volunteer;
 
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,18 +42,26 @@ public class approveEnrolledStudent extends HttpServlet {
 
         // 读取请求内容
 
-        int id= Integer.parseInt(request.getParameter("studentid"));
 
-        university_enroll_student universityenrollstudent=new university_enroll_student();
-        BaseDao baseDao=new BaseDao();
 
-        String sql="update university_enroll_student set is_approved=1 where id=?";
-        baseDao.executeUpdate(sql,id);
+        JSONArray studentId = (JSONArray) JSONArray.parse(request.getParameter("studentId"));
 
+        University_Enroll_StudentDao uesDao=new University_Enroll_StudentDao();
+
+            for(int i=0;i<studentId.size();i++){
+                int j= Integer.parseInt(studentId.getString(i));
+                university_enroll_student student=uesDao.SearchSignal1(j);
+                if(!"null".equals(String.valueOf(student.getStudentid()))&&!"0".equals(String.valueOf(student.getStudentid()))){
+                    uesDao.updateApproved(j);
+                }else {
+                    response.sendError(403, "提交错误，请刷新后重试");
+                    break;
+                }
+            }
     }
 
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doPost(request,response);
     }
 }

@@ -9,8 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MajorDao {
-    public ArrayList<major> searchMajor(int i){
-        ArrayList<major> majors=new ArrayList<major>();
+
+    public major searchMajor(int i){
+        major major=new major();
         String sql = "select * from major where classid=?";
         Connection connection = null;
         try {
@@ -19,13 +20,11 @@ public class MajorDao {
             pstmt.setInt(1,i);
             ResultSet rs=pstmt.executeQuery();
             while (rs.next()){
-                major major=new major();
                 major.setClassId(rs.getInt(1));
                 major.setRegionId(rs.getInt(2));
                 major.setNmajor(rs.getString(3));
                 major.setNclass(rs.getString(4));
                 major.setKind(rs.getInt(5));
-                majors.add(major);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -37,7 +36,7 @@ public class MajorDao {
                 e.printStackTrace();
             }
         }
-        return majors;
+        return major;
     }
 
     public String searchClassname(int i){
@@ -48,7 +47,7 @@ public class MajorDao {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1,i);
             ResultSet rs=pstmt.executeQuery();
-            if(rs.next()){
+            while (rs.next()){
                 s=rs.getNString(1);
             }
         } catch (SQLException e) {

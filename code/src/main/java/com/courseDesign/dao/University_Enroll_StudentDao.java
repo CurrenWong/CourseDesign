@@ -63,7 +63,7 @@ public class University_Enroll_StudentDao {
             while (rs.next()) {
                 plan plan = new plan();
                 plan.setPlanid(rs.getInt(1));
-                plan.setYear(rs.getDate(2));
+                plan.setYear(rs.getInt(2));
                 plan.setRegionid(rs.getInt(3));
                 plan.setClassid(rs.getInt(4));
                 plan.setUniversotyid(rs.getInt(5));
@@ -92,10 +92,148 @@ public class University_Enroll_StudentDao {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, student.getStudentid());
             pstmt.setInt(2, student.getUniversityid());
-            pstmt.setDate(3, student.getYear());
+            pstmt.setInt(3, student.getYear());
             pstmt.setString(4, student.getType());
             pstmt.setInt(5, student.getClass_id());
             pstmt.setInt(6, student.getIs_approved());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+    public boolean SearchSignal(int i){
+        boolean b=false;
+        Connection connection = DatabaseLink.getConnection();
+        String sql="select * from university_enroll_student where studentid=?";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, i);
+            ResultSet rs=pstmt.executeQuery();
+            while(rs.next()){
+                b=true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return b;
+    }
+
+    public university_enroll_student SearchSignal1(int i){
+        university_enroll_student student=new university_enroll_student();
+        Connection connection = DatabaseLink.getConnection();
+        String sql="select * from university_enroll_student where studentid=?";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, i);
+            ResultSet rs=pstmt.executeQuery();
+            while(rs.next()){
+                student.setId(rs.getInt(1));
+                student.setUniversityid(rs.getInt(2));
+                student.setStudentid(rs.getInt("studentid"));
+                System.out.println("Student:"+rs.getInt("studentid"));
+                student.setYear(rs.getInt(4));
+                student.setType(rs.getString(5));
+                student.setClass_id(rs.getInt(6));
+                student.setIs_approved(rs.getInt(7));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return student;
+    }
+
+    public ArrayList<university_enroll_student> searchUES1(int i){
+        Connection connection=DatabaseLink.getConnection();
+        ArrayList<university_enroll_student> universityEnrollStudents=new ArrayList<university_enroll_student>();
+        String sql= "select * from university_enroll_student where universityid=? and is_approved=1";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,i);
+            ResultSet rs=pstmt.executeQuery();
+            while (rs.next()){
+                university_enroll_student universityEnrollStudent=new university_enroll_student();
+                universityEnrollStudent.setId(rs.getInt(1));
+                universityEnrollStudent.setUniversityid(rs.getInt(2));
+                universityEnrollStudent.setStudentid(rs.getInt(3));
+                universityEnrollStudent.setYear(rs.getInt(4));
+                universityEnrollStudent.setType(rs.getString(5));
+                universityEnrollStudent.setClass_id(rs.getInt(6));
+                universityEnrollStudent.setIs_approved(rs.getInt(7));
+                universityEnrollStudents.add(universityEnrollStudent);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return  universityEnrollStudents;
+    }
+
+
+    public ArrayList<university_enroll_student> searchUES2(int i){
+        Connection connection=DatabaseLink.getConnection();
+        ArrayList<university_enroll_student> universityEnrollStudents=new ArrayList<university_enroll_student>();
+        String sql="select * from university_enroll_student where universityid=?";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,i);
+            ResultSet rs=pstmt.executeQuery();
+            while (rs.next()){
+                university_enroll_student universityEnrollStudent=new university_enroll_student();
+                universityEnrollStudent.setId(rs.getInt(1));
+                universityEnrollStudent.setUniversityid(rs.getInt(2));
+                universityEnrollStudent.setStudentid(rs.getInt(3));
+                universityEnrollStudent.setYear(rs.getInt(4));
+                universityEnrollStudent.setType(rs.getString(5));
+                universityEnrollStudent.setClass_id(rs.getInt(6));
+                universityEnrollStudent.setIs_approved(rs.getInt(7));
+                universityEnrollStudents.add(universityEnrollStudent);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return universityEnrollStudents;
+    }
+
+    public void updateApproved(int i) {
+        Connection connection = DatabaseLink.getConnection();
+        String sql = "update university_enroll_student set is_approved=1 where studentid=?";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,i);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
