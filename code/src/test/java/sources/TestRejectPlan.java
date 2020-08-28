@@ -88,7 +88,7 @@ public class TestRejectPlan extends EasyMockSupport {
         expect(request.getParameter("planIdArray")).andReturn("[\"100\", \"200\"]");
         // 设置返回参数
         try {
-            response.sendError(402, "提交失败，请刷新后重试");
+            response.sendError(403, "提交失败，请刷新后重试");
         } catch (IOException e) {
             e.printStackTrace();
         }
