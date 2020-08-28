@@ -31,7 +31,7 @@ public class approvePlan extends HttpServlet {
         if(planIdArray ==null){
             System.out.println("没进行批量退选");
         }else {
-            PrintWriter out=response.getWriter();
+            // PrintWriter out=response.getWriter();
             System.out.println("bbb");
             for (int i = 0; i < planIdArray.size(); i++) {
                 System.out.println("aaa");
@@ -41,6 +41,7 @@ public class approvePlan extends HttpServlet {
                 if("null".equals(String.valueOf(plan.getPlanid()))||"0".equals(String.valueOf(plan.getPlanid()))){
                     System.out.println("2222222222");
                     response.sendError(403, "提交失败，请刷新后重试");
+                    break;
                 }
                 else {
                     String sql = "update plan set is_approved=1 where planid=?";

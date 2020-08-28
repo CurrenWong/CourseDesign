@@ -67,11 +67,11 @@ public class TestApprovePlan extends EasyMockSupport {
         // 设置参数
         expect(request.getParameter("planIdArray")).andReturn(jsonObj.getString("planIdArray"));
         // 设置返回参数
-        try {
-            expect(response.getWriter()).andReturn(writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     expect(response.getWriter()).andReturn(writer);
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
         // 切换到replay模式
         replayAll();
         // 发送post请求
