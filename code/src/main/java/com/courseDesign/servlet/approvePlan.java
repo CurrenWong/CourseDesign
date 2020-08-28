@@ -39,8 +39,8 @@ public class approvePlan extends HttpServlet {
                 planid = Integer.parseInt(planIdArray.getString(i));
                 plan plan=planDao.searchPlan(planid);
                 if("null".equals(String.valueOf(plan.getPlanid()))&&"0".equals(String.valueOf(plan.getPlanid()))){
-                    response.sendError(403, "提交失败，请刷新后重试");
                     System.out.println("2222222222");
+                    response.sendError(403, "提交失败，请刷新后重试");
                 }
                 else {
                     String sql = "update plan set is_approved=1 where planid=?";
