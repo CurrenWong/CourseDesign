@@ -21,7 +21,7 @@ public class PlanDao extends BaseDao {
                 plan.setYear(rs.getInt("year"));
                 plan.setRegionid(rs.getInt("regionid"));
                 plan.setClassid(rs.getInt("classid"));
-                plan.setUniversotyid(rs.getInt("universotyid"));
+                plan.setUniversotyid(rs.getInt("universityid"));
                 plan.setNumber(rs.getInt("number"));
                 plan.setIs_approved(rs.getInt("is_approved"));
                 plan.setApproved_by(rs.getString("approved_by"));

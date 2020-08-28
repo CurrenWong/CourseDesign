@@ -23,7 +23,6 @@ public class approvePlan extends HttpServlet {
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
         
         // 读取请求内容
-        // 读取请求内容
         JSONArray planIdArray = (JSONArray) JSONArray.parse(request.getParameter("planIdArray"));
         // plan plan=new plan();
         BaseDao baseDao=new BaseDao();
@@ -38,9 +37,9 @@ public class approvePlan extends HttpServlet {
                 System.out.println("aaa");
                 planid = Integer.parseInt(planIdArray.getString(i));
                 plan plan=planDao.searchPlan(planid);
-                if("null".equals(String.valueOf(plan.getPlanid()))&&"0".equals(String.valueOf(plan.getPlanid()))){
-                    response.sendError(403, "提交失败，请刷新后重试");
+                if("null".equals(String.valueOf(plan.getPlanid()))||"0".equals(String.valueOf(plan.getPlanid()))){
                     System.out.println("2222222222");
+                    response.sendError(403, "提交失败，请刷新后重试");
                 }
                 else {
                     String sql = "update plan set is_approved=1 where planid=?";
@@ -48,7 +47,6 @@ public class approvePlan extends HttpServlet {
                     System.out.println("1111111111");
                 }
             }
-
         }
     }
 

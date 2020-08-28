@@ -111,6 +111,6 @@ public class TestApprovePlan extends EasyMockSupport {
         }
         // 输出结果
         System.out.println("TestApprovePlan Input: " + jsonObj.getString("planIdArray"));
-        System.out.println("TestApprovePlan Output: " + "{\"StatusCode\":\"402\"}");
+        System.out.println("TestApprovePlan Output: " + "{\"StatusCode\":\"403\"}");
     }
 }

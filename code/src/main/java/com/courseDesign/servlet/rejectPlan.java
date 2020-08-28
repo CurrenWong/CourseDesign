@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONArray;
 import com.courseDesign.dao.BaseDao;
+import com.courseDesign.dao.PlanDao;
 import com.courseDesign.javabean.plan;
 
 
@@ -25,20 +26,30 @@ public class rejectPlan  extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         /* 星号表示所有的异域请求都可以接受， */
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
-        PrintWriter out=response.getWriter();
-    
-       
-         JSONArray planIdArray = (JSONArray) JSONArray.parse(request.getParameter("planIdArray"));
+        // 读取请求内容
+        JSONArray planIdArray = (JSONArray) JSONArray.parse(request.getParameter("planIdArray"));
+        // plan plan=new plan();
         BaseDao baseDao=new BaseDao();
+        PlanDao planDao=new PlanDao();
         int planid=0;
         if(planIdArray ==null){
             System.out.println("没进行批量退选");
         }else {
+            PrintWriter out=response.getWriter();
+            System.out.println("bbb");
             for (int i = 0; i < planIdArray.size(); i++) {
+                System.out.println("aaa");
                 planid = Integer.parseInt(planIdArray.getString(i));
+                plan plan=planDao.searchPlan(planid);
+                if("null".equals(String.valueOf(plan.getPlanid()))&&"0".equals(String.valueOf(plan.getPlanid()))){
+                    response.sendError(403, "提交失败，请刷新后重试");
+                    System.out.println("2222222222");
+                }
+                else {
                     String sql = "update plan set is_approved=-1 where planid=?";
                     baseDao.executeUpdate(sql, planid);
-
+                    System.out.println("1111111111");
+                }
             }
 
         }
@@ -48,5 +59,4 @@ public class rejectPlan  extends HttpServlet {
         doPost(request,response);
     }
 }
-
 
