@@ -3,6 +3,7 @@ package com.courseDesign.servlet;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONArray;
 import com.courseDesign.dao.BaseDao;
+import com.courseDesign.dao.University_Enroll_StudentDao;
 import com.courseDesign.javabean.university_enroll_student;
 import com.courseDesign.javabean.volunteer;
 
@@ -42,18 +43,20 @@ public class rejectEnrolledStudent extends HttpServlet {
         //批量退选按钮，多个推选复选框都选后，点击批量退选按钮，前台传送学生id？
         
         JSONArray students_id = (JSONArray) JSONArray.parse(request.getParameter("studentId"));
-        university_enroll_student universityenrollstudent=new university_enroll_student();
-        BaseDao baseDao=new BaseDao();
-        int id=0;
-        if(students_id ==null){
-            System.out.println("没进行批量退选");
-        }else {
+        University_Enroll_StudentDao uesDao=new University_Enroll_StudentDao();
+        if(students_id.size()!=0){
             for(int i=0;i<students_id.size();i++){
-                id=Integer.parseInt(students_id.getString(i));
-                String sql="update university_enroll_student set is_approved=-1 where id=?";
-                baseDao.executeUpdate(sql,id);
+                int j= Integer.parseInt(students_id.getString(i));
+                university_enroll_student student=uesDao.SearchSignal1(j);
+                if(!"null".equals(String.valueOf(student.getStudentid()))&&!"0".equals(String.valueOf(student.getStudentid()))){
+                    uesDao.updateApproved1(j);
+                }else {
+                    response.sendError(403, "提交错误，请刷新后重试");
+                    break;
+                }
             }
-
+        }else {
+            response.sendError(403, "提交错误，请刷新后重试");
         }
         
     }

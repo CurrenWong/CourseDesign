@@ -2,10 +2,7 @@ package com.courseDesign.dao;
 
 import com.courseDesign.javabean.plan;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class PlanDao extends BaseDao {
     public plan searchPlan(int i){
@@ -18,7 +15,8 @@ public class PlanDao extends BaseDao {
             ResultSet rs=pstmt.executeQuery();
             while (rs.next()){
                plan.setPlanid(rs.getInt("planid"));
-                plan.setYear(rs.getInt("year"));
+                Date date=new Date(rs.getInt("year"));
+                plan.setYear(date.getYear());
                 plan.setRegionid(rs.getInt("regionid"));
                 plan.setClassid(rs.getInt("classid"));
                 plan.setUniversotyid(rs.getInt("universityid"));

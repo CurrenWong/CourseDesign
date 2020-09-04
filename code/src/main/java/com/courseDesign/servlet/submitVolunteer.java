@@ -35,23 +35,24 @@ public class submitVolunteer extends HttpServlet {
         /* 星号表示所有的异域请求都可以接受， */
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
+        PrintWriter out=response.getWriter();
 
 
 
         // 读取请求内容
-        int volunteerid= Integer.parseInt(request.getParameter("volunteerid").toString());
-        int volunteerno=Integer.parseInt(request.getParameter("volunteerno").toString());
+        int volunteerno=Integer.parseInt(request.getParameter("volunteerNo").toString());
         int batch=Integer.parseInt(request.getParameter("batch").toString());
-        int is_adjust=Integer.parseInt(request.getParameter("is_adjust").toString());
-        int studentid=Integer.parseInt(request.getParameter("studentid").toString());
-        int universityid=Integer.parseInt(request.getParameter("universityid").toString());
-        int classid=Integer.parseInt(request.getParameter("classid").toString());
+        int is_adjust=Integer.parseInt(request.getParameter("isAdjust").toString());
+        int studentid=Integer.parseInt(request.getParameter("studentId").toString());
+        int universityid=Integer.parseInt(request.getParameter("universityId").toString());
+        int classid=Integer.parseInt(request.getParameter("classId").toString());
         String type=request.getParameter("type").toString();
+        int classRank= Integer.parseInt(request.getParameter("classRank"));
 
         BaseDao baseDao=new BaseDao();
 
-        String sql="insert into volunteer（volunteerid,volunteerno,batch,is_adjust,studentid,universityid,classid,type） values(?,?,?，?，?，?，?，?)";
-        baseDao.executeUpdate(sql,volunteerid,volunteerno,batch,is_adjust,studentid,universityid,classid,type);
+        String sql="insert into volunteer（volunteerno,batch,is_adjust,studentid,universityid,classid,type,class_rank） values(?,?,?，?，?，?，?，?)";
+        baseDao.executeUpdate(sql,volunteerno,batch,is_adjust,studentid,universityid,classid,type,classRank);
 
 
     }

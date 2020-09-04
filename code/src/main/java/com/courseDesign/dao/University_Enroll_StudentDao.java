@@ -5,10 +5,7 @@ import com.courseDesign.javabean.university_enroll_student;
 import com.courseDesign.javabean.volunteer;
 import com.courseDesign.object.StudentAndVolunteer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class University_Enroll_StudentDao {
@@ -63,7 +60,8 @@ public class University_Enroll_StudentDao {
             while (rs.next()) {
                 plan plan = new plan();
                 plan.setPlanid(rs.getInt(1));
-                plan.setYear(rs.getInt(2));
+                Date d=new Date(rs.getInt(2));
+                plan.setYear(d.getYear());
                 plan.setRegionid(rs.getInt(3));
                 plan.setClassid(rs.getInt(4));
                 plan.setUniversotyid(rs.getInt(5));
@@ -144,8 +142,8 @@ public class University_Enroll_StudentDao {
                 student.setId(rs.getInt(1));
                 student.setUniversityid(rs.getInt(2));
                 student.setStudentid(rs.getInt("studentid"));
-                System.out.println("Student:"+rs.getInt("studentid"));
-                student.setYear(rs.getInt(4));
+                Date date=new Date(rs.getInt(4));
+                student.setYear(date.getYear());
                 student.setType(rs.getString(5));
                 student.setClass_id(rs.getInt(6));
                 student.setIs_approved(rs.getInt(7));
@@ -209,7 +207,8 @@ public class University_Enroll_StudentDao {
                 universityEnrollStudent.setId(rs.getInt(1));
                 universityEnrollStudent.setUniversityid(rs.getInt(2));
                 universityEnrollStudent.setStudentid(rs.getInt(3));
-                universityEnrollStudent.setYear(rs.getInt(4));
+                Date date=new Date(rs.getInt(4));
+                universityEnrollStudent.setYear(date.getYear());
                 universityEnrollStudent.setType(rs.getString(5));
                 universityEnrollStudent.setClass_id(rs.getInt(6));
                 universityEnrollStudent.setIs_approved(rs.getInt(7));
@@ -231,6 +230,25 @@ public class University_Enroll_StudentDao {
     public void updateApproved(int i) {
         Connection connection = DatabaseLink.getConnection();
         String sql = "update university_enroll_student set is_approved=1 where studentid=?";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,i);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void updateApproved1(int i) {
+        Connection connection = DatabaseLink.getConnection();
+        String sql = "update university_enroll_student set is_approved=-1 where studentid=?";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1,i);

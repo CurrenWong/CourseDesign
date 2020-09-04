@@ -65,7 +65,7 @@ public class TestRejectEnrolledStudent extends EasyMockSupport {
     @Test
     public void testValidInput() {
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("studentId", "[1, 2]");
+        jsonObj.put("studentId", "[1, 7]");
         // 设置参数
         expect(request.getParameter("studentId")).andReturn(jsonObj.getString("studentId"));
         // 切换到replay模式

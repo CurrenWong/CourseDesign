@@ -69,7 +69,6 @@ public class TestSubmitVolunteer extends EasyMockSupport {
         jsonObj.put("studentId", 1);
         jsonObj.put("universityId", 1);
         jsonObj.put("classId", 5);
-        jsonObj.put("isApproved", 0);
         jsonObj.put("type", "统招");
         // 设置参数
         expect(request.getParameter("volunteerNo")).andReturn(jsonObj.getString("volunteerNo"));
@@ -78,7 +77,6 @@ public class TestSubmitVolunteer extends EasyMockSupport {
         expect(request.getParameter("studentId")).andReturn(jsonObj.getString("studentId"));
         expect(request.getParameter("universityId")).andReturn(jsonObj.getString("universityId"));
         expect(request.getParameter("classId")).andReturn(jsonObj.getString("classId"));
-        expect(request.getParameter("isApproved")).andReturn(jsonObj.getString("isApproved"));
         expect(request.getParameter("type")).andReturn(jsonObj.getString("type"));
         expect(request.getParameter("classRank")).andReturn(jsonObj.getString("1"));
         // 设置返回参数
