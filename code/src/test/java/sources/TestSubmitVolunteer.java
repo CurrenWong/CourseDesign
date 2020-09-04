@@ -70,6 +70,7 @@ public class TestSubmitVolunteer extends EasyMockSupport {
         jsonObj.put("universityId", 1);
         jsonObj.put("classId", 5);
         jsonObj.put("type", "统招");
+        jsonObj.put("classRank",1);
         // 设置参数
         expect(request.getParameter("volunteerNo")).andReturn(jsonObj.getString("volunteerNo"));
         expect(request.getParameter("batch")).andReturn(jsonObj.getString("batch"));
@@ -78,7 +79,7 @@ public class TestSubmitVolunteer extends EasyMockSupport {
         expect(request.getParameter("universityId")).andReturn(jsonObj.getString("universityId"));
         expect(request.getParameter("classId")).andReturn(jsonObj.getString("classId"));
         expect(request.getParameter("type")).andReturn(jsonObj.getString("type"));
-        expect(request.getParameter("classRank")).andReturn(jsonObj.getString("1"));
+        expect(request.getParameter("classRank")).andReturn(jsonObj.getString("classRank"));
         // 设置返回参数
         try {
             expect(response.getWriter()).andReturn(writer);
@@ -96,7 +97,7 @@ public class TestSubmitVolunteer extends EasyMockSupport {
         // 输出结果
         System.out.println("TestsubmitVolunteer Input: " + jsonObj.toJSONString());
         // 删除插入的数据
-        String sql = "delete from dev.plan WHERE volunteerNo = ?;";
-        BaseDao.executeUpdate(sql, Integer.parseInt(jsonObj.getString("volunteerNo")));
+        String sql = "delete from dev.volunteer WHERE volunteerno=?";
+        BaseDao.executeUpdate(sql,Integer.parseInt(jsonObj.getString("volunteerNo")));
     }
 }

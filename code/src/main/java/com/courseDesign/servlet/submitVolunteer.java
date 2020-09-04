@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(name = "submitVolunteer")
+@WebServlet(name = "submitVolunteer",urlPatterns = "/submitVolunteer.do")
 public class submitVolunteer extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
@@ -51,13 +51,13 @@ public class submitVolunteer extends HttpServlet {
 
         BaseDao baseDao=new BaseDao();
 
-        String sql="insert into volunteer（volunteerno,batch,is_adjust,studentid,universityid,classid,type,class_rank） values(?,?,?，?，?，?，?，?)";
+        String sql="insert into volunteer(volunteerno,batch,is_adjust,studentid,universityid,classid,type,class_rank)values(?,?,?,?,?,?,?,?)";
         baseDao.executeUpdate(sql,volunteerno,batch,is_adjust,studentid,universityid,classid,type,classRank);
 
 
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doPost(request,response);
     }
 }
