@@ -66,6 +66,7 @@ public class TestFindEnrolledStudent extends EasyMockSupport {
 
         // 设置参数
         expect(request.getParameter("universityId")).andReturn("1");
+        expect(request.getParameter("type")).andReturn("统招");
         // 设置返回参数
         try {
             expect(response.getWriter()).andReturn(writer);
@@ -81,7 +82,7 @@ public class TestFindEnrolledStudent extends EasyMockSupport {
             e.printStackTrace();
         }
         // 输出结果
-        System.out.println("TestFindEnrolledStudent Input: " + "{\"universityId\":\"1\"}");
+        System.out.println("TestFindEnrolledStudent Input: " + "{\"universityId\":\"1\", \"type\":\"统招\"}");
         System.out.println("TestFindEnrolledStudent Output: " + out.toString());
         // 返回结果存储在JSONArray中
         JSONArray jsArray = (JSONArray) JSONObject.parse(out.toString());
@@ -112,6 +113,7 @@ public class TestFindEnrolledStudent extends EasyMockSupport {
     public void testInvalidInput() {
         // 设置参数
         expect(request.getParameter("universityId")).andReturn("0");
+        expect(request.getParameter("type")).andReturn("统招");
         // 设置返回参数
         try {
             response.sendError(403, "访问错误，请刷新后重试");
@@ -128,7 +130,7 @@ public class TestFindEnrolledStudent extends EasyMockSupport {
             e.printStackTrace();
         }
         // 输出结果
-        System.out.println("TestFindEnrolledStudent Input: " + "{\"universityId\":\"0\"}");
+        System.out.println("TestFindEnrolledStudent Input: " + "{\"universityId\":\"0\", \"type\":\"统招\"}");
         System.out.println("TestFindEnrolledStudent Output: " + "{\"StatusCode\":\"403\"}");
     }
 }

@@ -58,7 +58,7 @@ public class findPlanById extends HttpServlet {
             out.print(jsonArray.toString());
         } else {
             // 若不存在，返回状态码402
-            response.sendError(402, "id输入错误");
+            response.sendError(402, "无查询结果");
         }
     }
 

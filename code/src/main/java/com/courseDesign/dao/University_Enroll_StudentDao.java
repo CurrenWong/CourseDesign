@@ -146,7 +146,7 @@ public class University_Enroll_StudentDao {
                 student.setUniversityid(rs.getInt(2));
                 student.setStudentid(rs.getInt("studentid"));
                 Date date=new Date(rs.getInt(4));
-                student.setYear(date.getYear());
+                student.setYear(date.getYear() + 1900);
                 student.setType(rs.getString(5));
                 student.setClass_id(rs.getInt(6));
                 student.setIs_approved(rs.getInt(7));
@@ -197,13 +197,14 @@ public class University_Enroll_StudentDao {
     }
 
 
-    public ArrayList<university_enroll_student> searchUES2(int i){
+    public ArrayList<university_enroll_student> searchUES2(int i, String type){
         Connection connection=DatabaseLink.getConnection();
         ArrayList<university_enroll_student> universityEnrollStudents=new ArrayList<university_enroll_student>();
-        String sql="select * from university_enroll_student where universityid=?";
+        String sql="select * from university_enroll_student where universityid=? AND type = ? AND is_approved = 0";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setInt(1,i);
+            pstmt.setInt(1, i);
+            pstmt.setString(2, type);
             ResultSet rs=pstmt.executeQuery();
             while (rs.next()){
                 university_enroll_student universityEnrollStudent=new university_enroll_student();
@@ -211,7 +212,7 @@ public class University_Enroll_StudentDao {
                 universityEnrollStudent.setUniversityid(rs.getInt(2));
                 universityEnrollStudent.setStudentid(rs.getInt(3));
                 Date date=new Date(rs.getInt(4));
-                universityEnrollStudent.setYear(date.getYear());
+                universityEnrollStudent.setYear(date.getYear() + 1900);
                 universityEnrollStudent.setType(rs.getString(5));
                 universityEnrollStudent.setClass_id(rs.getInt(6));
                 universityEnrollStudent.setIs_approved(rs.getInt(7));

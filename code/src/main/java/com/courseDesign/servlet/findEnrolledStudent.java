@@ -36,11 +36,12 @@ public class findEnrolledStudent extends HttpServlet {
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
 
         int universityId = Integer.parseInt(request.getParameter("universityId").toString());
+        String type = request.getParameter("type").toString();
 
         StudentDao studentDao=new StudentDao();
         University_Enroll_StudentDao universityEnrollStudentDao=new University_Enroll_StudentDao();
         MajorDao majorDao = new MajorDao();
-        ArrayList<university_enroll_student> universityEnrollStudents = universityEnrollStudentDao.searchUES2(universityId);
+        ArrayList<university_enroll_student> universityEnrollStudents = universityEnrollStudentDao.searchUES2(universityId, type);
         if(universityEnrollStudents.size() !=0){
             PrintWriter out = response.getWriter();
             JSONArray jsonArray=new JSONArray();

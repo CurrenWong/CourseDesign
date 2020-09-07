@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(name = "findEnrollmentResultById")
+@WebServlet(name = "findEnrollmentResultById", urlPatterns = "/findEnrollmentResultById.do")
 public class findEnrollmentResultById extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -83,7 +83,7 @@ public class findEnrollmentResultById extends HttpServlet {
 
             out.print(jsonObject.toString());
         }else{
-            response.sendError(402,"无录取结果");
+            response.sendError(403,"无录取结果");
         }
 
     }

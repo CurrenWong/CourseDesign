@@ -1,0 +1,111 @@
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective settings
+[WARNING] expected START_TAG or END_TAG not TEXT (position: TEXT seen ...</mirrorOf>\ua0\n        <u... @170:11)  @ /Users/mac/Java/Maven/conf/settings.xml, line 170, column 11
+[WARNING] 
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.course:courseDesign >-----------------------
+[INFO] Building courseDesign Maven Webapp 1.0-SNAPSHOT
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:resources (default-resources) @ courseDesign ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ courseDesign ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:testResources (default-testResources) @ courseDesign ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /Users/mac/Applications/Github/CourseDesign/code/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ courseDesign ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M5:test (default-test) @ courseDesign ---
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running sources.TestFindEnrollmentResultById
+TestFindEnrollmentResultById Input: {"studentid":"1"}
+TestFindEnrollmentResultById Output: {"studentId":1,"universityName":"上海理工大学","universityId":1,"classId":5,"year":"2020","studentName":"王一","className":"经济与贸易类","id":1,"type":"统招","isApproved":1}
+TestFindEnrollmentResultById Input: {"studentid":"0"}
+TestFindEnrollmentResultById Output: {"StatusCode":"402"}
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.368 s - in sources.TestFindEnrollmentResultById
+[INFO] Running sources.TestFindEnrolledStudent
+TestFindEnrolledStudent Input: {"universityId":"1", "type":"统招"}
+TestFindEnrolledStudent Output: [{"majors":[{"nclass":"经济与贸易类","classId":5,"regionId":5,"kind":1,"batch":1,"nmajor":"国际经济与贸易、金融学、税收学、管理科学"}],"gender":"男","regionId":5,"name":"王一","rank":200,"testId":19875426874625,"id":1,"totalScore":698},{"majors":[{"nclass":"经济与贸易类","classId":5,"regionId":6,"kind":1,"batch":1,"nmajor":"国际经济与贸易、金融学、税收学、管理科学"}],"gender":"男","regionId":6,"name":"王琦","rank":8000,"testId":19856423581658,"id":7,"totalScore":542},{"majors":[{"nclass":"机械类","classId":1,"regionId":1,"kind":1,"batch":1,"nmajor":"能源与动力工程、新能源科学与工程、车辆工程、工业设计、土木工程"}],"gender":"女","regionId":1,"name":"王二","rank":3000,"testId":12345824562584,"id":2,"totalScore":650}]
+TestFindEnrolledStudent Input: {"universityId":"0", "type":"统招"}
+TestFindEnrolledStudent Output: {"StatusCode":"403"}
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.319 s - in sources.TestFindEnrolledStudent
+[INFO] Running sources.TestApprovePlan
+TestApprovePlan Input: {"planIdArray":"[1, 2]"}
+TestApprovePlan Output: {"StatusCode":"200"}
+TestApprovePlan Input: {"planIdArray":"[100, 200]"}
+TestApprovePlan Output: {"StatusCode":"403"}
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.185 s - in sources.TestApprovePlan
+[INFO] Running sources.TestRejectEnrolledStudent
+TestRejectEnrolledStudent Input: {studentId:[1, 7]}
+TestRejectEnrolledStudent Output: {"StatusCode":"200"}
+TestRejectEnrolledStudent Input: {studentId:[100, 200]}
+TestRejectEnrolledStudent Output: {"StatusCode":"403"}
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.188 s - in sources.TestRejectEnrolledStudent
+[INFO] Running sources.TestFindApprovedStudent
+TestFindEnrolledStudent Input: {"universityId":"1"}
+TestFindEnrolledStudent Output: [{"majors":[{"nclass":"经济与贸易类","classId":5,"regionId":5,"kind":1,"batch":1,"nmajor":"国际经济与贸易、金融学、税收学、管理科学"}],"approvedMajorName":"经济与贸易类","gender":"男","regionId":5,"name":"王一","rank":200,"testId":19875426874625,"id":1,"approvedType":"统招","totalScore":698},{"majors":[{"nclass":"经济与贸易类","classId":5,"regionId":6,"kind":1,"batch":1,"nmajor":"国际经济与贸易、金融学、税收学、管理科学"}],"approvedMajorName":"经济与贸易类","gender":"男","regionId":6,"name":"王琦","rank":8000,"testId":19856423581658,"id":7,"approvedType":"统招","totalScore":542}]
+TestFindEnrolledStudent Input: {"universityId":"0"}
+TestFindEnrolledStudent Output: {"StatusCode":"403"}
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.293 s - in sources.TestFindApprovedStudent
+[INFO] Running sources.TestSubmitVolunteer
+TestsubmitVolunteer Input: {"studentId":1,"universityId":1,"volunteerNo":12,"classId":5,"batch":1,"type":"统招","classRank":1,"isAdjust":1}
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.072 s - in sources.TestSubmitVolunteer
+[INFO] Running sources.TestSubmitPlan
+TestSubmitPlan Input: {"universityId":"1","number":"10","classId":"1","year":"2020","regionId":"1","approvedBy":"","planId":"8","isApproved":"0"}
+TestSubmitPlan Output: {"StatusCode":200}
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.083 s - in sources.TestSubmitPlan
+[INFO] Running sources.TestEnroll
+TestEnroll Input: {"batch":"1","type":"统招"}
+TestEnroll Output: {"StatusCode":200}
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.245 s - in sources.TestEnroll
+[INFO] Running sources.TestRejectPlan
+TestRejectPlan Input: {planIdArray:["1", "2"]}"
+TestRejectPlan Output: {"StatusCode":"200"}
+TestRejectPlan Input: {"planIdArray":["100", "200"]}
+TestRejectPlan Output: {"StatusCode":"402"}
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.166 s - in sources.TestRejectPlan
+[INFO] Running sources.TestApporveEnrolledStudent
+TestapproveEnrolledStudent Input: {studentId:[1, 7]}
+TestapproveEnrolledStudent Output: {"StatusCode":"200"}
+TestapproveEnrolledStudent Input: {studentId:[100, 200]}
+TestapproveEnrolledStudent Output: {"StatusCode":"403"}
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.206 s - in sources.TestApporveEnrolledStudent
+[INFO] Running sources.TestFindStudentByTestid
+TestFindStudentByTestid Input: {"name":"王一", "testId":"19875426874625"}
+TestFindStudentByTestid Output: {"gender":"男","englishScore":138,"regionId":5,"chinesrScore":120,"kind":2,"name":"王一","rank":200,"testId":19875426874625,"mathScore":142,"id":1,"compScore":298,"totalScore":698}
+TestFindStudentByTestid Input: {"name":"王一", "testId":"0"}
+TestFindStudentByTestid Output: {"StatusCode":"402"}
+TestFindStudentByTestid Input: {"name":"王一", "testId":"12345824562584"}
+TestFindStudentByTestid Output: {"StatusCode":"402"}
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.102 s - in sources.TestFindStudentByTestid
+[INFO] Running sources.TestFindStudentById
+TestFindStudentById Input: {"id":"1"}
+TestFindStudentById Output: {"gender":"男","englishScore":138,"regionId":5,"chinesrScore":120,"kind":2,"name":"王一","rank":200,"testId":19875426874625,"mathScore":142,"id":1,"compScore":298,"totalScore":698}
+TestFindStudentById Input: {"id":"0"}
+TestFindStudentById Output: {"StatusCode":"402"}
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.066 s - in sources.TestFindStudentById
+[INFO] Running sources.TestFindPlanById
+TestFindPlanById Input: {"universityId":"1","year":"2020"}
+TestFindPlanById Output: [{"universityid":1,"number":23,"classid":1,"year":2020,"regionid":1,"is_approved":1,"planid":5},{"universityid":1,"number":19,"classid":4,"approved_by":"","year":2020,"regionid":1,"is_approved":0,"planid":16},{"universityid":1,"number":10,"classid":1,"approved_by":"","year":2020,"regionid":1,"is_approved":0,"planid":17},{"universityid":1,"number":10,"classid":1,"approved_by":"","year":2020,"regionid":1,"is_approved":0,"planid":18},{"universityid":1,"number":10,"classid":1,"approved_by":"","year":2020,"regionid":1,"is_approved":0,"planid":19},{"universityid":1,"number":10,"classid":1,"approved_by":"","year":2020,"regionid":1,"is_approved":0,"planid":20},{"universityid":1,"number":10,"classid":1,"approved_by":"","year":2020,"regionid":1,"is_approved":0,"planid":21}]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.036 s - in sources.TestFindPlanById
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 23, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.632 s
+[INFO] Finished at: 2020-09-07T15:34:45+08:00
+[INFO] ------------------------------------------------------------------------

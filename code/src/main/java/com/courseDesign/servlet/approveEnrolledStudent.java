@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.SimpleFormatter;
 
-@WebServlet(name = "approveEnrolledStudent")
+@WebServlet(name = "approveEnrolledStudent", urlPatterns = "/approveEnrolledStudent.do")
 public class approveEnrolledStudent extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");

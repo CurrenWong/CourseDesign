@@ -83,8 +83,8 @@ public class TestEnroll extends EasyMockSupport {
             e.printStackTrace();
         }
         // 输出结果
-        System.out.println("TestFindPlanById Input: " + jsonObj.toJSONString());
+        System.out.println("TestEnroll Input: " + jsonObj.toJSONString());
         // 删除插入的数据
-        System.out.println("TestFindPlanById Output: " + "{\"StatusCode\"" +":200}");
+        System.out.println("TestEnroll Output: " + "{\"StatusCode\"" +":200}");
     }
 }

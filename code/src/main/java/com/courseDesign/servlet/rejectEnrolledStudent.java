@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.SimpleFormatter;
 
-@WebServlet(name = "rejectEnrolledStudent")
+@WebServlet(name = "rejectEnrolledStudent", urlPatterns = "/rejectEnrolledStudent.do")
 public class rejectEnrolledStudent extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
