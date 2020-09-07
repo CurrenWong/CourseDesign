@@ -7,14 +7,15 @@ import com.courseDesign.object.StudentAndVolunteer;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class University_Enroll_StudentDao {
 
     public ArrayList<StudentAndVolunteer> searchVolunteer(int i, String j) {
         ArrayList<StudentAndVolunteer> volunteers = new ArrayList<StudentAndVolunteer>();
 
-        String sql = "select dev.student.regionid,dev.student.total_score,dev.volunteer.*  from dev.student join dev.volunteer"
-                + "where dev.student.id=dev.volunteer.studentid and batch=? and type=?"
+        String sql = "select dev.student.regionid,dev.student.total_score,dev.volunteer.*  from dev.student join dev.volunteer "
+                + "where dev.student.id=dev.volunteer.studentid and batch=? and type=? "
                 + "order by dev.student.regionid,dev.student.total_score desc,dev.volunteer.studentid,dev.volunteer.volunteerno asc;";
         Connection connection = null;
         try {
@@ -25,7 +26,7 @@ public class University_Enroll_StudentDao {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 StudentAndVolunteer volunteer = new StudentAndVolunteer();
-                volunteer.setRegionid(rs.getInt("regionide"));
+                volunteer.setRegionid(rs.getInt("regionid"));
                 volunteer.setTotal_score(rs.getInt("total_score"));
                 volunteer.setVolunteerid(rs.getInt("volunteerid"));
                 volunteer.setVolunteerno(rs.getInt("volunteerno"));
@@ -60,8 +61,10 @@ public class University_Enroll_StudentDao {
             while (rs.next()) {
                 plan plan = new plan();
                 plan.setPlanid(rs.getInt(1));
-                Date d=new Date(rs.getInt(2));
-                plan.setYear(d.getYear());
+                Date d = rs.getDate(2);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(d);
+                plan.setYear(calendar.get(Calendar.YEAR));
                 plan.setRegionid(rs.getInt(3));
                 plan.setClassid(rs.getInt(4));
                 plan.setUniversotyid(rs.getInt(5));
@@ -109,7 +112,7 @@ public class University_Enroll_StudentDao {
     public boolean SearchSignal(int i){
         boolean b=false;
         Connection connection = DatabaseLink.getConnection();
-        String sql="select * from university_enroll_student where studentid=?";
+        String sql="select * from university_enroll_student where studentid=? AND is_approved <> -1";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, i);

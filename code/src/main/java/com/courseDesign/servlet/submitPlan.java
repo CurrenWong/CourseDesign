@@ -28,7 +28,7 @@ public class submitPlan extends HttpServlet {
         // 读取请求内容
   
         int planid= Integer.parseInt(request.getParameter("planId").toString());
-        String year =request.getParameter("year").toString();
+        int year =Integer.parseInt(request.getParameter("year").toString());
         int regionid=Integer.parseInt(request.getParameter("regionId").toString());
         int classid=Integer.parseInt(request.getParameter("classId").toString());
         int universotyid=Integer.parseInt(request.getParameter("universityId").toString());
@@ -36,8 +36,8 @@ public class submitPlan extends HttpServlet {
         int is_approved=Integer.parseInt(request.getParameter("isApproved").toString());
         String approved_by=request.getParameter("approvedBy").toString();
         BaseDao baseDao=new BaseDao();
-        String sql = "insert into plan ( planid,year,regionid,classid,universityid,number,is_approved,approved_by) values(?,?,?,?,?,?,?,?)";
-        baseDao.executeUpdate(sql,planid,year,regionid,classid,universotyid,number,is_approved,approved_by);
+        String sql = "insert into plan (planid,year,regionid,classid,universityid,number,is_approved,approved_by) values(null,?,?,?,?,?,?,?)";
+        baseDao.executeUpdate(sql,year,regionid,classid,universotyid,number,is_approved,approved_by);
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

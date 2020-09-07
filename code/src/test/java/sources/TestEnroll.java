@@ -1,3 +1,4 @@
+
 package sources;
 
 import static org.easymock.EasyMock.expect;
@@ -6,21 +7,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-
+import com.alibaba.fastjson.JSONObject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.alibaba.fastjson.JSONObject;
-import com.courseDesign.dao.BaseDao;
-import com.courseDesign.servlet.approvePlan;
+
+import com.courseDesign.servlet.enroll;
 
 import org.easymock.EasyMockSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestApprovePlan extends EasyMockSupport {
-    private approvePlan servlet;
+public class TestEnroll extends EasyMockSupport {
+    private enroll servlet;
     private HttpServletRequest request;
     private HttpServletResponse response;
     StringWriter out;
@@ -31,7 +31,7 @@ public class TestApprovePlan extends EasyMockSupport {
     @Before
     public void setUp() {
         // 创建Servlet
-        servlet = new approvePlan();
+        servlet = new enroll();
         // 创建字符输出流
         out = new StringWriter();
         writer = new PrintWriter(out);
@@ -63,44 +63,17 @@ public class TestApprovePlan extends EasyMockSupport {
     @Test
     public void testValidInput() {
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("planIdArray", "[1, 2]");
+        jsonObj.put("type", "统招");
+        jsonObj.put("batch", "1");
         // 设置参数
-        expect(request.getParameter("planIdArray")).andReturn(jsonObj.getString("planIdArray"));
-        // 设置返回参数
-        // try {
-        //     expect(response.getWriter()).andReturn(writer);
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
-        // 切换到replay模式
-        replayAll();
-        // 发送post请求
-        try {
-            servlet.doPost(request, response);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
-        // 输出结果
-        System.out.println("TestApprovePlan Input: " + jsonObj.toJSONString());
-        System.out.println("TestApprovePlan Output: " + "{\"StatusCode\":\"200\"}");
-        // 恢复修改的数据
-        String sql = "update dev.plan set is_approved=0 WHERE planid = ? OR planid = ?;";
-        BaseDao.executeUpdate(sql, 1, 2);
-    }
-
-    @Test
-    public void testInvalidInput() {
-        JSONObject jsonObj = new JSONObject();
-        jsonObj.put("planIdArray", "[100, 200]");
-        // 设置参数
-        expect(request.getParameter("planIdArray")).andReturn(jsonObj.getString("planIdArray"));
+        expect(request.getParameter("type")).andReturn(jsonObj.getString("type"));
+        expect(request.getParameter("batch")).andReturn(jsonObj.getString("batch"));
         // 设置返回参数
         try {
-            response.sendError(403, "提交失败，请刷新后重试");
+            expect(response.getWriter()).andReturn(writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
         // 切换到replay模式
         replayAll();
         // 发送post请求
@@ -110,7 +83,8 @@ public class TestApprovePlan extends EasyMockSupport {
             e.printStackTrace();
         }
         // 输出结果
-        System.out.println("TestApprovePlan Input: " + jsonObj.toJSONString());
-        System.out.println("TestApprovePlan Output: " + "{\"StatusCode\":\"403\"}");
+        System.out.println("TestFindPlanById Input: " + jsonObj.toJSONString());
+        // 删除插入的数据
+        System.out.println("TestFindPlanById Output: " + "{\"StatusCode\"" +":200}");
     }
 }

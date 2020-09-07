@@ -44,38 +44,47 @@ public class findEnrollmentResultById extends HttpServlet {
         // 读取请求内容
         int studentid = Integer.parseInt(request.getParameter("studentid").toString());
         
-        PrintWriter out=response.getWriter();
+
         university_enroll_student ues=new university_enroll_student(); //录取信息
         BaseDao baseDao=new BaseDao();
         List<Map<String,Object>> maps=new ArrayList<>();
         String sql="select * from university_enroll_student where studentid=?";
         maps=baseDao.executeQuery(sql,studentid);
-        
-        Map<String, Object> map=maps.get(0);//整个maps只有一条map
-        ues.setId((Integer) map.get("id"));
-        ues.setStudentid((Integer) map.get("studentid"));
-        ues.setUniversityid((Integer) map.get("universityid"));
-        ues.setYear((Integer) map.get("year"));
-        ues.setType((String) map.get("type"));
-        ues.setClass_id((Integer) map.get("class_id"));
-        ues.setIs_approved((Integer) map.get("is_approved"));
-        int isapproved =0;
-        if(ues.getIs_approved()==1)
-            isapproved=1;
-        if(ues.getIs_approved()==-1)
-            isapproved=-1;
-        if(ues.getIs_approved()==0)
-            isapproved=0;
+        if(maps.size()!=0){
+            PrintWriter out=response.getWriter();
+            Map<String, Object> map=maps.get(0);//整个maps只有一条map
+            ues.setId((Integer) map.get("id"));
+            ues.setStudentid((Integer) map.get("studentid"));
+            String sql3="select * from student where id=?";
+            List<Map<String,Object>> maps3=baseDao.executeQuery(sql3,map.get("studentid"));
+            ues.setUniversityid((Integer) map.get("universityid"));
+            String sql2="select * from university where universityid=?";
+            List<Map<String,Object>> maps2=baseDao.executeQuery(sql2,map.get("universityid"));
+            Date d= (Date) map.get("year");
+            int i=d.getYear()+1900;
+            ues.setYear(i);
+            ues.setType((String) map.get("type"));
+            ues.setClass_id((Integer) map.get("class_id"));
+            String sql4="select * from major where classid=?";
+            List<Map<String,Object>> maps4=baseDao.executeQuery(sql4,map.get("class_id"));
+            ues.setIs_approved((Integer) map.get("is_approved"));
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id",ues.getId());
-        jsonObject.put("studentid",ues.getStudentid());
-        jsonObject.put("universityid",ues.getUniversityid());
-        jsonObject.put("year",ues.getYear());
-        jsonObject.put("type",ues.getType());
-        jsonObject.put("class_id",ues.getClass_id());
-        jsonObject.put("is_approved",isapproved);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id",ues.getId());
+            jsonObject.put("studentId",ues.getStudentid());
+            jsonObject.put("universityId",ues.getUniversityid());
+            jsonObject.put("universityName", maps2.get(0).get("universityname"));
+            jsonObject.put("studentName",maps3.get(0).get("name"));
+            jsonObject.put("year",ues.getYear()+"");
+            jsonObject.put("type",ues.getType());
+            jsonObject.put("classId",ues.getClass_id());
+            jsonObject.put("className",maps4.get(0).get("nclass"));
+            jsonObject.put("isApproved",ues.getIs_approved());
 
-        out.print(jsonObject.toString());
+            out.print(jsonObject.toString());
+        }else{
+            response.sendError(402,"无录取结果");
+        }
+
     }
 }
